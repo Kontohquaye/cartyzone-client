@@ -6,7 +6,11 @@ module.exports = {
       colors: {
         primary: "#202732",
         secondary: "#E83A3A",
+        img: "#EBEBEB",
         accent: "#959595",
+      },
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
       },
     },
   },

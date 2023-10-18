@@ -9,6 +9,24 @@
   animation: rotation 1s linear infinite;
 }
 
+/* media queries */
+@media screen and (min-width: 460px) {
+  .featured .image {
+    flex-basis: 40%;
+  }
+}
+@media screen and (min-width: 640px) {
+  .featured .image {
+    flex-basis: 50%;
+  }
+}
+@media screen and (min-width: 800px) {
+  .featured .image {
+    flex-basis: 40%;
+  }
+}
+
+/* animations */
 @keyframes rotation {
   0% {
     transform: rotate(0deg);
