@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import Products from "../components/Product.jsx";
 import Rating from "../components/Rating.jsx";
 import data from "../utils/data.js";
@@ -18,6 +19,9 @@ const Home = () => {
 
   return (
     <div className="home mt-4">
+      <Helmet>
+        <title>Cartyzone | Home</title>
+      </Helmet>
       {/* featured Products */}
       <h1 className="text-center sm:text-2xl font-bold">Featured Products</h1>
       <div className="featured-products grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
@@ -28,7 +32,7 @@ const Home = () => {
             key={product.id}
           >
             {/* image section */}
-            <div className="image basis-1/2 bg-img h-full  overflow-hidden">
+            <div className="image basis-1/2 bg-img h-full  overflow-hidden up">
               <img
                 className="h-full w-full "
                 src={product.image}
@@ -52,7 +56,7 @@ const Home = () => {
                 </p>
                 <p className="text-accent font-thin">{product.brand}</p>
               </div>
-              <button className="bg-primary text-white py-1">
+              <button className="bg-primary-200 hover:bg-primary-100 text-white py-1 hover:bg-slate-400">
                 Add To Cart
               </button>
             </div>
@@ -61,7 +65,6 @@ const Home = () => {
       </div>
       {/* Products */}
       <Products products={allProducts} />
-      <span className="loader"></span>
     </div>
   );
 };

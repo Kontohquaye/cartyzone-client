@@ -9,12 +9,24 @@
   animation: rotation 1s linear infinite;
 }
 
+/* border */
+.covered {
+  border: 1px solid #959595;
+  border-radius: 15px;
+}
+
+.covered .details {
+  padding: 2px;
+}
+
 /* media queries */
+/* featured */
 @media screen and (min-width: 460px) {
   .featured .image {
     flex-basis: 40%;
   }
 }
+
 @media screen and (min-width: 640px) {
   .featured .image {
     flex-basis: 50%;
@@ -23,6 +35,33 @@
 @media screen and (min-width: 800px) {
   .featured .image {
     flex-basis: 40%;
+  }
+}
+
+/* products */
+@media screen and (min-width: 300px) {
+  .product {
+    width: 90%;
+    margin-inline: auto;
+  }
+}
+@media screen and (min-width: 500px) {
+  .product-section {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem !important;
+  }
+  /* reset */
+  .covered {
+    border: none;
+    border-radius: 0;
+  }
+
+  .covered .details {
+    padding: 0;
+  }
+  .product {
+    width: 100%;
+    margin: auto;
   }
 }
 
