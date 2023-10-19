@@ -5,7 +5,7 @@ const Footer = () => {
   const date = new Date(timeStamp);
   const day = date.getFullYear();
   return (
-    <div className="footer h-[20vh] bg-primary-200 text-white flex flex-col items-center justify-center">
+    <div className="footer h-[20vh] bg-primary-200 text-white flex flex-col items-center justify-center p-2 mt-4">
       <div className="row-one">
         <p className="font-bold text-center ">
           <span className="font-thin mr-1">&copy;</span>

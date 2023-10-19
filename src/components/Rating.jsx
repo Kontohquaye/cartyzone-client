@@ -2,7 +2,7 @@ import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
 
 const Rating = ({ rating, numReviews }) => {
   return (
-    <div className="rating flex items-center">
+    <div className="rating flex items-center font-poppins">
       <div className="stars flex text-rating">
         {/* first star */}
         {rating > 1 ? (

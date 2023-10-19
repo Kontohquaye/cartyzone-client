@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 
 const RootLayout = () => {
   return (
-    <div className="root-layout font-poppins">
+    <div className="root-layout font-raleway">
       <Navbar />
       <main className="max-w-[1200px] mx-auto px-2">
         <Outlet />

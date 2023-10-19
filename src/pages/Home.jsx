@@ -50,7 +50,7 @@ const Home = () => {
                 />
               </div>
               <div>
-                <p className="text-secondary font-semibold">
+                <p className="text-secondary font-semibold font-poppins">
                   ${product.price}
                   .00
                 </p>
