@@ -3,11 +3,19 @@ import Products from "../components/Product.jsx";
 import Rating from "../components/Rating.jsx";
 import data from "../utils/data.js";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+
+// context
+import { Store } from "../services/Store.jsx";
 
 const Home = () => {
   const { products } = data;
   const featuredProducts = [];
   const allProducts = [];
+  const { state, ctxDispatch } = useContext(Store);
+  const { cart: cartItems } = state;
+  const { cartItems: cartItemList } = cartItems;
+  console.log(cartItemList);
 
   products.forEach((product) => {
     if (product.category === "Featured") {
@@ -17,6 +25,12 @@ const Home = () => {
       allProducts.push(product);
     }
   });
+
+  // add to cart Handler
+  const addToCartHandler = (item) => {
+    ctxDispatch({ type: "ADD_TO_CART", payload: item });
+    localStorage.setItem("cartItems", JSON.stringify(cartItemList));
+  };
 
   return (
     <div className="home mt-4">
@@ -64,7 +78,12 @@ const Home = () => {
                 </p>
                 <p className="text-accent font-thin">{product.brand}</p>
               </div>
-              <button className="bg-primary-200 hover:bg-primary-100 text-white py-1 hover:bg-slate-400">
+              <button
+                className="bg-primary-200 hover:bg-primary-100 text-white py-1 hover:bg-slate-400"
+                onClick={() => {
+                  addToCartHandler(product);
+                }}
+              >
                 Add To Cart
               </button>
             </div>
