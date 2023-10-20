@@ -1,8 +1,9 @@
 import { useState } from "react";
 import Rating from "./Rating";
 import ReactPaginate from "react-paginate";
-import { TbShoppingCartPlus } from "react-icons/tb";
+import { TbShoppingCartPlus, TbShoppingCartX } from "react-icons/tb";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Products = ({ products }) => {
   const [pageNumber, setPageNumber] = useState(0);
@@ -12,6 +13,11 @@ const Products = ({ products }) => {
     setPageNumber(selected);
   };
   const pageCount = Math.ceil(products.length / productsPerPage);
+
+  // disabled button
+  const handleClick = () => {
+    toast.error("out of stock");
+  };
 
   // product display
   const displayProducts = products
@@ -45,9 +51,19 @@ const Products = ({ products }) => {
               <p className="text-secondary font-semibold font-poppins">
                 ${product.price.toFixed(2)}
               </p>
-              <button className="bg-primary-200 hover:bg-primary-100 w-9 h-9 rounded-full flex justify-center items-center">
-                <TbShoppingCartPlus className="text-white" />
-              </button>
+
+              {product.countInStock > 0 ? (
+                <button className="bg-primary-200 hover:bg-primary-100 w-9 h-9 rounded-full flex justify-center items-center">
+                  <TbShoppingCartPlus className="text-white" />
+                </button>
+              ) : (
+                <button
+                  onClick={handleClick}
+                  className="bg-primary-200 hover:bg-primary-100 w-9 h-9 rounded-full flex justify-center items-center"
+                >
+                  <TbShoppingCartX className="text-white" />
+                </button>
+              )}
             </div>
           </div>
         </div>

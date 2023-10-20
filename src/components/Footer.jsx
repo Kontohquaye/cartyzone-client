@@ -15,7 +15,7 @@ const Footer = () => {
           </span>
         </p>
       </div>
-      <div className="row-two">We support</div>
+      <div className="row-two">Supported Payments</div>
       <div className="row-three mt-2">
         <img src={payment} alt="supported payments " />
       </div>
