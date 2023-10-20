@@ -1,4 +1,5 @@
 import { TiShoppingCart } from "react-icons/ti";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -7,18 +8,22 @@ const Navbar = () => {
         {/* left- logo and category */}
         <div>
           {/* logo */}
-          <h1 className="text-2xl italic cursor-pointer">
-            C<span className="text-secondary">ar</span>tyzon
-            <span className="text-secondary">e</span>
-          </h1>
+          <Link to="/">
+            <h1 className="text-2xl italic cursor-pointer">
+              C<span className="text-secondary">ar</span>tyzon
+              <span className="text-secondary">e</span>
+            </h1>
+          </Link>
         </div>
 
         {/* right */}
         <div>
           {/* cart */}
-          <div className="cart">
-            <TiShoppingCart className="text-2xl cursor-pointer hover:text-accent" />
-          </div>
+          <Link to="/cart">
+            <div className="cart">
+              <TiShoppingCart className="text-2xl cursor-pointer hover:text-accent" />
+            </div>
+          </Link>
         </div>
       </nav>
     </div>

@@ -5,17 +5,18 @@ const data = {
       name: "Black Full Fit",
       slug: "black-full-fit",
       category: "Featured",
-      image: "/images/apparel1.jpg",
+      image: "/images/apparel1.png",
       price: 120.0,
       countInStock: 10,
       rating: 3.5,
       brand: "AT collections",
       numReviews: 10,
-      description: "high quality shirt",
+      description:
+        "Elevate your style with the Black Full Fit shirt by AT Collections. Crafted for comfort and fashion, this high-quality shirt is a must-have for any wardrobe.",
     },
     {
       id: 2,
-      name: "Airpod",
+      name: "AirPod",
       slug: "airpod",
       category: "Electronics",
       image: "/images/airpod.png",
@@ -24,7 +25,8 @@ const data = {
       brand: "Apple",
       rating: 4.0,
       numReviews: 10,
-      description: "high quality product",
+      description:
+        "Immerse yourself in audio excellence with Apple's AirPods. These sleek, wireless earbuds deliver premium sound quality and a sophisticated matte black finish for a truly premium listening experience.high quality product, Experience audio excellence with Black AirPods. Sleek, stylish, and wireless, they deliver immersive sound, seamless connectivity, and a sophisticated matte black finish for a truly premium listening experience",
     },
     {
       id: 3,
@@ -37,7 +39,8 @@ const data = {
       brand: "Woody",
       rating: 3.0,
       numReviews: 14,
-      description: "high quality product",
+      description:
+        "Experience the epitome of comfort with Woody's Arm-Chair. This high-quality piece offers a cozy spot to unwind and relax in style.",
     },
     {
       id: 4,
@@ -47,10 +50,11 @@ const data = {
       image: "/images/bag-1.png",
       price: 65.0,
       countInStock: 5,
-      brand: "Puma",
+      brand: "Addidas",
       rating: 4.5,
       numReviews: 10,
-      description: "high quality product",
+      description:
+        "Add a touch of sporty chic to your look with the Adidas Bag Pack. Designed for versatility, it features premium materials, ample storage, and the iconic Adidas logo.",
     },
     {
       id: 5,
@@ -63,7 +67,8 @@ const data = {
       brand: "Slikes Clothing",
       rating: 3.8,
       numReviews: 10,
-      description: "high quality product",
+      description:
+        "Elevate your outfit with a high-quality belt from Slikes Clothing. This accessory adds a touch of style and sophistication to your look.",
     },
     {
       id: 6,
@@ -76,7 +81,8 @@ const data = {
       brand: "Puma",
       rating: 4.5,
       numReviews: 10,
-      description: "high quality product",
+      description:
+        "Puma's Black Shirt is a high-quality staple for your wardrobe. It combines style and comfort for a fashionable and relaxed look.",
     },
     {
       id: 7,
@@ -89,7 +95,8 @@ const data = {
       brand: "Addidas",
       rating: 3.5,
       numReviews: 10,
-      description: "high quality product",
+      description:
+        "Stay hydrated in style with the Addidas Bottle. This high-quality product is a perfect companion for your active lifestyle.",
     },
     {
       id: 8,
@@ -102,7 +109,8 @@ const data = {
       brand: "Trinity",
       rating: 4.0,
       numReviews: 10,
-      description: "high quality product",
+      description:
+        "Enhance your look with the stylish Trinity Brown Hat. Crafted with care, this high-quality accessory adds flair to any outfit.",
     },
     {
       id: 9,
@@ -115,24 +123,26 @@ const data = {
       brand: "T&T collection",
       rating: 4.5,
       numReviews: 10,
-      description: "high quality product",
+      description:
+        "Stay warm and fashionable with the T&T Collection's Brown Coat. This high-quality piece offers both style and functionality.",
     },
     {
       id: 10,
       name: "Lenovo Headset",
       slug: "lenovo-headset",
       category: "Featured",
-      image: "/images/lenovo-headset.jpg",
+      image: "/images/wireless-01.png",
       price: 55.0,
       countInStock: 5,
       brand: "Lenovo",
       rating: 4.5,
       numReviews: 1200,
-      description: "high quality product",
+      description:
+        "Dive into a world of audio quality with the Lenovo Headset. This high-quality product promises a superior listening experience.",
     },
     {
       id: 11,
-      name: "Iphone 14",
+      name: "iPhone 14",
       slug: "iphone-14",
       category: "Featured",
       image: "/images/iphone-promax.png",
@@ -141,20 +151,22 @@ const data = {
       brand: "Apple",
       rating: 4.5,
       numReviews: 55788,
-      description: "high quality product",
+      description:
+        "The Apple iPhone 14 is a technological masterpiece, blending innovation and elegance. With a powerful camera, stunning OLED display, and lightning-fast performance, it's your gateway to the future.",
     },
     {
       id: 12,
-      name: "Canon Camera",
-      slug: "canon-camera",
+      name: "Nikon Camera",
+      slug: "nikon-camera",
       category: "Electronics",
       image: "/images/camera-1.png",
       price: 165.0,
       countInStock: 95,
-      brand: "Canon",
+      brand: "Nikon",
       rating: 4.5,
       numReviews: 10,
-      description: "high quality product",
+      description:
+        "Capture life's moments with the sleek and powerful Black Nikon Camera. High-resolution images, versatile shooting modes, and advanced autofocus make it perfect for stunning photos and videos.",
     },
     {
       id: 13,
@@ -167,7 +179,8 @@ const data = {
       brand: "PSP",
       rating: 4.5,
       numReviews: 10,
-      description: "high quality product",
+      description:
+        "Elevate your gaming experience with the PS5 Pad by PSP. This high-quality accessory enhances your gameplay and immersion.",
     },
     {
       id: 14,
@@ -180,7 +193,8 @@ const data = {
       brand: "Omel",
       rating: 4.0,
       numReviews: 10,
-      description: "high quality product",
+      description:
+        "Embrace style and clarity with Omel Glasses. These high-quality eyewear pieces not only provide vision support but also add a touch of sophistication.",
     },
     {
       id: 15,
@@ -193,7 +207,8 @@ const data = {
       brand: "Addidas",
       rating: 3.5,
       numReviews: 10,
-      description: "high quality product",
+      description:
+        "Complete your look with the Addidas Hat. Crafted with care, this high-quality accessory is perfect for sports enthusiasts and fashion-forward individuals.",
     },
     {
       id: 16,
@@ -205,8 +220,9 @@ const data = {
       countInStock: 125,
       brand: "Apple",
       rating: 4.5,
-      numReviews: 10,
-      description: "high quality product",
+      numReviews: 1780,
+      description:
+        "Experience Apple's legacy with the iPhone 12, a high-quality smartphone that combines performance and style seamlessly.",
     },
     {
       id: 17,
@@ -218,8 +234,9 @@ const data = {
       countInStock: 105,
       brand: "AK Jewelleries",
       rating: 4.5,
-      numReviews: 10,
-      description: "high quality product",
+      numReviews: 190,
+      description:
+        "Adorn yourself with elegance using AK Jewelleries' high-quality Diamond Earrings. These stunning pieces add a touch of luxury to any ensemble.",
     },
     {
       id: 18,
@@ -231,8 +248,9 @@ const data = {
       countInStock: 85,
       brand: "AK Jewelleries",
       rating: 4.5,
-      numReviews: 10,
-      description: "high quality product",
+      numReviews: 104,
+      description:
+        "AK Jewelleries' Diamond Necklace is a high-quality jewel that complements your style with its exquisite design and radiant beauty.",
     },
     {
       id: 19,
@@ -244,8 +262,9 @@ const data = {
       countInStock: 85,
       brand: "Trity",
       rating: 4.5,
-      numReviews: 10,
-      description: "high quality product",
+      numReviews: 2,
+      description:
+        "Experience excellence with the Trity XPS 14 laptop. This high-quality electronic device offers top-notch performance and sleek design.",
     },
     {
       id: 20,
@@ -258,7 +277,8 @@ const data = {
       brand: "Puma",
       rating: 3.0,
       numReviews: 10,
-      description: "high quality product",
+      description:
+        "Puma's Blue Hoodie is a high-quality addition to your wardrobe. It's comfortable, stylish, and perfect for those who appreciate casual fashion.",
     },
     {
       id: 21,
@@ -270,8 +290,9 @@ const data = {
       countInStock: 105,
       brand: "Merie Collection",
       rating: 4.5,
-      numReviews: 10,
-      description: "high quality product",
+      numReviews: 70,
+      description:
+        "Step out in style with Merie Collection's high-quality heels. These fashionable shoes not only provide comfort but also add elegance to your look.",
     },
     {
       id: 22,
@@ -283,8 +304,9 @@ const data = {
       countInStock: 205,
       brand: "Samsung",
       rating: 4.5,
-      numReviews: 10,
-      description: "high quality product",
+      numReviews: 1870,
+      description:
+        "Samsung's Galaxy S23 is a high-quality smartphone with cutting-edge features. It offers a top-tier camera, stunning display, and fast performance.",
     },
     {
       id: 23,
@@ -296,8 +318,9 @@ const data = {
       countInStock: 85,
       brand: "GH Wears",
       rating: 4.5,
-      numReviews: 10,
-      description: "high quality product",
+      numReviews: 490,
+      description:
+        "GH Wears' African Shirt is a high-quality clothing piece that reflects culture and style. It's perfect for those who appreciate unique fashion.",
     },
     {
       id: 24,
@@ -309,8 +332,9 @@ const data = {
       countInStock: 12,
       brand: "Nike",
       rating: 4.5,
-      numReviews: 10,
-      description: "high quality product",
+      numReviews: 1004,
+      description:
+        "Nike's Air sneakers are high-quality footwear designed for comfort and performance. Stay in style while staying active.",
     },
     {
       id: 25,
@@ -322,9 +346,11 @@ const data = {
       countInStock: 75,
       brand: "ATR",
       rating: 4.5,
-      numReviews: 10,
-      description: "high quality product",
+      numReviews: 990,
+      description:
+        "ATR's Formal Wear shoes are the epitome of sophistication and style. These high-quality formal shoes add a touch of elegance to your attire, perfect for special occasions.",
     },
+
     {
       id: 26,
       name: "Nike Air Force",
@@ -336,7 +362,8 @@ const data = {
       brand: "Nike",
       rating: 4.5,
       numReviews: 10,
-      description: "high quality product",
+      description:
+        "Step up your footwear game with Nike's Air Force shoes. These high-quality sneakers offer a perfect blend of style, comfort, and performance.",
     },
     {
       id: 27,
@@ -349,7 +376,8 @@ const data = {
       brand: "Nike",
       rating: 4.5,
       numReviews: 10,
-      description: "high quality product",
+      description:
+        "Elevate your shoe collection with Nike's Air Force-Black. These high-quality sneakers are a fashion statement that complements your style.",
     },
     {
       id: 28,
@@ -361,8 +389,9 @@ const data = {
       countInStock: 185,
       brand: "Apple",
       rating: 4.5,
-      numReviews: 10,
-      description: "high quality product",
+      numReviews: 1489,
+      description:
+        "Experience a blend of technology and style with the Apple Series 1 smartwatch. This high-quality accessory keeps you connected and fashionable.",
     },
     {
       id: 29,
@@ -374,8 +403,9 @@ const data = {
       countInStock: 85,
       brand: "Apple",
       rating: 4.5,
-      numReviews: 10,
-      description: "high quality product",
+      numReviews: 998,
+      description:
+        "Stay ahead with the Apple Series 3 smartwatch. This high-quality device is not just a timepiece but also a fashion statement.",
     },
     {
       id: 30,
@@ -387,8 +417,9 @@ const data = {
       countInStock: 15,
       brand: "Xiome",
       rating: 4.5,
-      numReviews: 10,
-      description: "high quality product",
+      numReviews: 134,
+      description:
+        "Embrace smart style with Xiome's Xio Watch 2. This high-quality smartwatch combines functionality and fashion effortlessly.",
     },
     {
       id: 31,
@@ -400,8 +431,9 @@ const data = {
       countInStock: 18,
       brand: "Tecno",
       rating: 3.5,
-      numReviews: 10,
-      description: "high quality product",
+      numReviews: 80,
+      description:
+        "Stay connected and stylish with Tecno Smart 1. This high-quality smartwatch is a perfect blend of technology and fashion.",
     },
     {
       id: 32,
@@ -413,12 +445,13 @@ const data = {
       countInStock: 95,
       brand: "Nike",
       rating: 4.5,
-      numReviews: 10,
-      description: "high quality product",
+      numReviews: 780,
+      description:
+        "Elevate your shoe game with Nike Shoes. These high-quality sneakers combine style and performance for an active and fashionable lifestyle.",
     },
     {
       id: 33,
-      name: "Samsung Curved Tv",
+      name: "Samsung Curved TV",
       slug: "samsung-curved-tv",
       category: "Electronics",
       image: "/images/tv-2.png",
@@ -426,8 +459,9 @@ const data = {
       countInStock: 178,
       brand: "Samsung",
       rating: 4.5,
-      numReviews: 10,
-      description: "high quality product",
+      numReviews: 7004,
+      description:
+        "Experience cinematic entertainment with Samsung's Curved TV. This high-quality television offers immersive viewing and stunning visuals.",
     },
     {
       id: 34,
@@ -440,7 +474,8 @@ const data = {
       brand: "Bing",
       rating: 4.5,
       numReviews: 10,
-      description: "high quality product",
+      description:
+        "Upgrade your audio experience with W3 Headset by Bing. These high-quality wireless headphones provide premium sound quality for your listening pleasure.",
     },
     {
       id: 35,
@@ -453,7 +488,8 @@ const data = {
       brand: "Bing",
       rating: 4.5,
       numReviews: 10,
-      description: "high quality product",
+      description:
+        "Dive into a world of audio excellence with the W3 Headset Blue by Bing. These high-quality wireless headphones deliver premium sound quality and style.",
     },
   ],
 };

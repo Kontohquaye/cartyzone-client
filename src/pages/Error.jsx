@@ -1,4 +1,5 @@
 import { useNavigate, useRouteError } from "react-router-dom";
+import { IoMdArrowRoundBack } from "react-icons/io";
 import NotFound from "../assets/404 Error-rafiki.svg";
 
 const Error = () => {
@@ -20,7 +21,8 @@ const Error = () => {
             navigate(-1);
           }}
         >
-          Back
+          <IoMdArrowRoundBack className="inline-block " />
+          Go Back
         </button>
       </div>
     </div>

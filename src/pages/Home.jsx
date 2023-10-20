@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import Products from "../components/Product.jsx";
 import Rating from "../components/Rating.jsx";
 import data from "../utils/data.js";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const { products } = data;
@@ -33,17 +34,24 @@ const Home = () => {
           >
             {/* image section */}
             <div className="image basis-1/2 bg-img h-full  overflow-hidden up">
-              <img
-                className="h-full w-full "
-                src={product.image}
-                alt={product.slug + "img"}
-              />
+              <Link to={`/products/${product.slug}`}>
+                <img
+                  className="h-full w-full "
+                  src={product.image}
+                  alt={product.slug + "img"}
+                />
+              </Link>
             </div>
             {/* details section */}
             <div className="details basis-1/2 h-full pl-2 flex flex-col justify-between">
               {/* title and rating */}
               <div>
-                <p className="font-semibold">{product.name}</p>
+                <Link to={`/products/${product.slug}`}>
+                  <p className="font-semibold hover:text-blue-500 hover:underline">
+                    {product.name}
+                  </p>
+                </Link>
+
                 <Rating
                   rating={product.rating}
                   numReviews={product.numReviews}
