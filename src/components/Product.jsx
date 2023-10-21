@@ -1,11 +1,18 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Rating from "./Rating";
 import ReactPaginate from "react-paginate";
 import { TbShoppingCartPlus, TbShoppingCartX } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Store } from "../services/Store";
 
 const Products = ({ products }) => {
+  const {
+    state: {
+      cart: { cartItems },
+    },
+    ctxDispatch,
+  } = useContext(Store);
   const [pageNumber, setPageNumber] = useState(0);
   const productsPerPage = 8;
   const productsViewed = pageNumber * productsPerPage;
@@ -17,6 +24,15 @@ const Products = ({ products }) => {
   // disabled button
   const handleClick = () => {
     toast.error("out of stock");
+  };
+
+  // add to cart handler
+  const addToCartHandler = (product) => {
+    const existItem = cartItems.find((item) => item.id === product.id);
+    const quantity = existItem ? (existItem.quantity += 1) : 1;
+
+    ctxDispatch({ type: "ADD_TO_CART", payload: { ...product, quantity } });
+    // console.log(cartItems);
   };
 
   // product display
@@ -53,13 +69,18 @@ const Products = ({ products }) => {
               </p>
 
               {product.countInStock > 0 ? (
-                <button className="bg-primary-200 hover:bg-primary-100 w-9 h-9 rounded-full flex justify-center items-center">
+                <button
+                  onClick={() => {
+                    addToCartHandler(product);
+                  }}
+                  className="bg-primary-200 hover:bg-primary-100 w-9 h-9 rounded-full flex justify-center items-center"
+                >
                   <TbShoppingCartPlus className="text-white" />
                 </button>
               ) : (
                 <button
                   onClick={handleClick}
-                  className="bg-primary-200 hover:bg-primary-100 w-9 h-9 rounded-full flex justify-center items-center"
+                  className="bg-primary-100 hover:bg-zinc-600 w-9 h-9 rounded-full flex justify-center items-center"
                 >
                   <TbShoppingCartX className="text-white" />
                 </button>

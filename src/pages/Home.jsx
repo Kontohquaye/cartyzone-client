@@ -3,7 +3,7 @@ import Products from "../components/Product.jsx";
 import Rating from "../components/Rating.jsx";
 import data from "../utils/data.js";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useReducer } from "react";
 import { toast } from "react-toastify";
 
 // context
@@ -17,7 +17,6 @@ const Home = () => {
   const {
     cart: { cartItems },
   } = state;
-  // const { cartItems: cartItemList } = cartItems;
 
   products.forEach((product) => {
     if (product.category === "Featured") {

@@ -3,13 +3,30 @@ import data from "../utils/data";
 import { Helmet } from "react-helmet-async";
 import Rating from "../components/Rating";
 import { toast } from "react-toastify";
+import { useContext } from "react";
+import { Store } from "../services/Store";
 
 const ProductDetails = () => {
   const { slug } = useParams();
   const { products } = data;
+  const {
+    state: {
+      cart: { cartItems },
+    },
+    ctxDispatch,
+  } = useContext(Store);
   const product = products.find((x) => x.slug === slug);
   const handleClick = () => {
     toast.error("out of stock");
+  };
+
+  // add to cart functionality
+  const addToCartHandler = (product) => {
+    const existItem = cartItems.find((item) => item.id === product.id);
+    const quantity = existItem ? (existItem.quantity += 1) : 1;
+
+    ctxDispatch({ type: "ADD_TO_CART", payload: { ...product, quantity } });
+    // console.log(cartItems);
   };
 
   return (
@@ -73,7 +90,12 @@ const ProductDetails = () => {
             </div>
             <div className="flex justify-center items-center">
               {product.countInStock > 0 ? (
-                <button className="bg-primary-200 hover:bg-primary-100 text-white  hover:bg-slate-400 p-2  rounded-3xl mt-2 sm:mt-0 w-1/2   ">
+                <button
+                  onClick={() => {
+                    addToCartHandler(product);
+                  }}
+                  className="bg-primary-200 hover:bg-primary-100 text-white  hover:bg-slate-400 p-2  rounded-3xl mt-2 sm:mt-0 w-1/2   "
+                >
                   Add to Cart
                 </button>
               ) : (
