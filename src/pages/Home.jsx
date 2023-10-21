@@ -14,8 +14,10 @@ const Home = () => {
   const featuredProducts = [];
   const allProducts = [];
   const { state, ctxDispatch } = useContext(Store);
-  const { cart: cartItems } = state;
-  const { cartItems: cartItemList } = cartItems;
+  const {
+    cart: { cartItems },
+  } = state;
+  // const { cartItems: cartItemList } = cartItems;
 
   products.forEach((product) => {
     if (product.category === "Featured") {
@@ -27,9 +29,12 @@ const Home = () => {
   });
 
   // add to cart Handler
-  const addToCartHandler = (item) => {
-    ctxDispatch({ type: "ADD_TO_CART", payload: item });
-    localStorage.setItem("cartItems", JSON.stringify(cartItemList));
+  const addToCartHandler = (product) => {
+    const existItem = cartItems.find((item) => item.id === product.id);
+    const quantity = existItem ? (existItem.quantity += 1) : 1;
+
+    ctxDispatch({ type: "ADD_TO_CART", payload: { ...product, quantity } });
+    // console.log(cartItems);
   };
 
   const handleClick = () => {
