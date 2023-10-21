@@ -47,7 +47,9 @@
   border-radius: 4px;
 } */
 
-/* product  details */
+.toast-bar {
+  background-color: #ff3d00 !important;
+}
 
 /* pagination */
 .paginate-container a:hover {

@@ -6,11 +6,10 @@ import "./index.css";
 import StoreProvider from "./services/Store.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <StoreProvider>
-      <HelmetProvider>
-        <App />
-      </HelmetProvider>
-    </StoreProvider>
-  </React.StrictMode>
+  <StoreProvider>
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>
+  </StoreProvider>
+  // </React.StrictMode>
 );

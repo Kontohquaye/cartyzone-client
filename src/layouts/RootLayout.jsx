@@ -8,13 +8,18 @@ import Footer from "../components/Footer";
 const RootLayout = () => {
   return (
     <div className="root-layout font-raleway">
-      <ToastContainer position="top-right" limit={1} />
       <Navbar />
       <main className="max-w-[1200px] mx-auto px-2">
         <Outlet />
       </main>
       <Footer />
-      <ToastContainer />
+      <ToastContainer
+        position="top-right"
+        limit={2}
+        progressClassName={"toast-bar"}
+        pauseOnHover={false}
+        pauseOnFocusLoss={false}
+      />
     </div>
   );
 };
