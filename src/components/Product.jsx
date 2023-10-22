@@ -31,7 +31,13 @@ const Products = ({ products }) => {
     const existItem = cartItems.find((item) => item.id === product.id);
     const quantity = existItem ? (existItem.quantity += 1) : 1;
 
-    ctxDispatch({ type: "ADD_TO_CART", payload: { ...product, quantity } });
+    if (product.countInStock < quantity) {
+      toast.error("stock is less than quantity needed");
+      return;
+    }
+    if (product.countInStock > quantity) {
+      ctxDispatch({ type: "ADD_TO_CART", payload: { ...product, quantity } });
+    }
     // console.log(cartItems);
   };
 

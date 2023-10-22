@@ -25,8 +25,12 @@ const ProductDetails = () => {
     const existItem = cartItems.find((item) => item.id === product.id);
     const quantity = existItem ? (existItem.quantity += 1) : 1;
 
-    ctxDispatch({ type: "ADD_TO_CART", payload: { ...product, quantity } });
-    // console.log(cartItems);
+    if (product.countInStock < quantity) {
+      toast.error("stock is less than quantity needed");
+      return;
+    } else {
+      ctxDispatch({ type: "ADD_TO_CART", payload: { ...product, quantity } });
+    } // console.log(cartItems);
   };
 
   return (

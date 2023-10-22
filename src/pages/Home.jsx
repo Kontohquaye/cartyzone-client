@@ -3,7 +3,7 @@ import Products from "../components/Product.jsx";
 import Rating from "../components/Rating.jsx";
 import data from "../utils/data.js";
 import { Link } from "react-router-dom";
-import { useContext, useReducer } from "react";
+import { useContext } from "react";
 import { toast } from "react-toastify";
 
 // context
@@ -31,8 +31,13 @@ const Home = () => {
   const addToCartHandler = (product) => {
     const existItem = cartItems.find((item) => item.id === product.id);
     const quantity = existItem ? (existItem.quantity += 1) : 1;
-
-    ctxDispatch({ type: "ADD_TO_CART", payload: { ...product, quantity } });
+    if (product.countInStock < quantity) {
+      toast.error("stock is less than quantity needed");
+      return;
+    }
+    if (product.countInStock > quantity) {
+      ctxDispatch({ type: "ADD_TO_CART", payload: { ...product, quantity } });
+    }
     // console.log(cartItems);
   };
 

@@ -104,6 +104,16 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem !important;
   }
+
+  /* cart */
+  .cart .left {
+    min-width: 350px;
+  }
+
+  .cart .info {
+    padding-left: 0;
+  }
+
   /* reset */
   .covered {
     border: none;
