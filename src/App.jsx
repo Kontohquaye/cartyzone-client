@@ -13,6 +13,7 @@ import RootLayout from "./layouts/RootLayout";
 import Home from "./pages/Home";
 import Error from "./pages/Error";
 import ProductDetails from "./pages/ProductDetails";
+import Cart from "./pages/Cart";
 
 // router
 const router = createBrowserRouter(
@@ -20,6 +21,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<RootLayout />} errorElement={<Error />}>
       <Route index element={<Home />} />
       <Route path="/products/:slug" element={<ProductDetails />} />
+      <Route path="/cart" element={<Cart />} />
     </Route>
   )
 );

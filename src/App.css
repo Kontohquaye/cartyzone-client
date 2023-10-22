@@ -55,6 +55,7 @@
 .paginate-container a:hover {
   background-color: #202732;
   color: #fff;
+  color: #dddcdc;
 }
 
 .active-page a {
