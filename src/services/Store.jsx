@@ -19,10 +19,10 @@ const reducer = (state, action) => {
         cart: { cartItems },
       } = state;
       const newItem = action.payload;
-      const existItem = cartItems.find((item) => item.id === newItem.id);
+      const existItem = cartItems.find((item) => item._id === newItem._id);
       const newCartItems = existItem
         ? cartItems.map((product) =>
-            product.id === existItem.id ? newItem : product
+            product._id === existItem._id ? newItem : product
           )
         : [...cartItems, newItem];
       localStorage.setItem("cartItems", JSON.stringify(newCartItems));
@@ -38,7 +38,7 @@ const reducer = (state, action) => {
       const productId = action.payload;
 
       const updatedCartItems = state.cart.cartItems.filter(
-        (item) => item.id !== productId
+        (item) => item._id !== productId
       );
       localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
       return {

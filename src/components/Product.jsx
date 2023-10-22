@@ -52,7 +52,7 @@ const Products = ({ products }) => {
         >
           {/* image section */}
           <div className="image bg-img h-64 object-cover mb-2">
-            <Link to={`/products/${product.slug}`}>
+            <Link to={`/products/${product._id}`}>
               <img
                 src={product.image}
                 alt={product.slug}
@@ -63,7 +63,7 @@ const Products = ({ products }) => {
           {/* details section */}
           <div className="details">
             <Rating rating={product.rating} numReviews={product.numReviews} />
-            <Link to={`/products/${product.slug}`}>
+            <Link to={`/products/${product._id}`}>
               <p className="font-semibold hover:text-blue-500 hover:underline">
                 {product.name}
               </p>

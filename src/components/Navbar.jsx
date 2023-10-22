@@ -56,16 +56,16 @@ const Navbar = () => {
             <div className="sm:flex sm:items-center absolute right-0 bg-primary-200 sm: sm:p-0 sm:bg-transparent sm:static">
               {/* category section */}
               <div className="category-section flex items-center font-semibold sm:mr-3 cursor-pointer sm:hover:text-accent p-2 mb-1 sm:p-0 sm:mb-0 hover:bg-secondary  sm:hover:bg-transparent">
-                <BiCategoryAlt className="font-bold text-2xl" />
+                <BiCategoryAlt className="font-bold text-2xl mr-1" />
                 <span>Categories</span>
               </div>
 
               {/* cart */}
               <Link to="/cart ">
                 <div className="cart relative py-1 sm:p-0 flex items-center cursor-pointer sm:hover:text-accent hover:bg-secondary p-2 sm:hover:bg-transparent">
-                  <TiShoppingCart className="text-2xl cursor-pointer sm:hover:text-accent" />
+                  <TiShoppingCart className="text-2xl cursor-pointer sm:hover:text-accent mr-1" />
                   {state.cart.cartItems && state.cart.cartItems.length > 0 && (
-                    <span className="absolute   left-16 bottom-2 bg-secondary  text-white  text-xs  w-5 h-5 leading-5 text-center sm:leading-6 rounded-full">
+                    <span className="absolute   left-[68px] bottom-2 bg-secondary  text-white  text-xs  w-5 h-5 leading-5 text-center sm:leading-6 rounded-full">
                       {state.cart.cartItems.length > 99
                         ? 99 + "+"
                         : state.cart.cartItems.length}
@@ -76,7 +76,7 @@ const Navbar = () => {
               </Link>
               {/* account section */}
               <div className="flex cursor-pointer sm:hover:text-accent p-2 sm:p-0 hover:bg-secondary sm:hover:bg-transparent">
-                <MdAccountCircle className="text-2xl cursor-pointer  sm:ml-4" />
+                <MdAccountCircle className="text-2xl cursor-pointer  sm:ml-4 mr-1" />
                 <span className="font-semibold sm:ml-1">Account</span>
               </div>
             </div>

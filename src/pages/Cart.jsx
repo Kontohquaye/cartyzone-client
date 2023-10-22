@@ -108,7 +108,7 @@ const Cart = () => {
                 </div>
                 <div className="info basis-1/2 pl-3 ">
                   <Link
-                    to={`/products/${product.slug}`}
+                    to={`/products/${product._id}`}
                     className="font-semibold hover:underline hover:text-blue-600"
                   >
                     <h2>{product.name}</h2>
