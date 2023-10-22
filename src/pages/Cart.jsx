@@ -45,9 +45,10 @@ const Cart = () => {
         </div>
       )}
       {cartItems && cartItems.length !== 0 && (
-        <div className="cart-items grid grid-cols-2">
+        <div className="cart-items grid pb-2 md:pb-0   grid-flow-col overflow-x-auto overscroll-x-contain">
           {/* left */}
-          <div className="left flex flex-col gap-2 bg-img p-3">
+
+          <div className="left flex w-64 sm:w-full flex-col gap-2 bg-img p-3 min-w-[350px]">
             {/* flex col */}
 
             <div className="title-section flex justify-evenly font-bold mb-2">
@@ -81,7 +82,7 @@ const Cart = () => {
             ))}
           </div>
           {/* right */}
-          <div className="right py-3 pl-9">
+          <div className="right py-3 pl-9 min-w-[350px]">
             <div className="title-section flex justify-between font-bold mb-2">
               <p>PRICE</p>
               <p>QTY</p>
