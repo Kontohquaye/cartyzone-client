@@ -28,7 +28,7 @@ const Products = ({ products }) => {
 
   // add to cart handler
   const addToCartHandler = (product) => {
-    const existItem = cartItems.find((item) => item.id === product.id);
+    const existItem = cartItems.find((item) => item._id === product._id);
     const quantity = existItem ? (existItem.quantity += 1) : 1;
 
     if (product.countInStock < quantity) {
@@ -48,7 +48,7 @@ const Products = ({ products }) => {
       return (
         <div
           className="product flex flex-col covered overflow-hidden transform up"
-          key={product.id}
+          key={product._id}
         >
           {/* image section */}
           <div className="image bg-img h-64 object-cover mb-2">

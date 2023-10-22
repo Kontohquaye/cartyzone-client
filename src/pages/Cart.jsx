@@ -21,7 +21,7 @@ const Cart = () => {
 
   // add to cart handler
   const addToCartHandler = (product) => {
-    const existItem = cartItems.find((item) => item.id === product.id);
+    const existItem = cartItems.find((item) => item._id === product._id);
     const quantity = existItem ? (existItem.quantity += 1) : 1;
     if (product.countInStock < quantity) {
       toast.error("stock is less than quantity needed");
@@ -33,12 +33,18 @@ const Cart = () => {
     // console.log(cartItems);
   };
 
+  // clear from cart handler
+  const clearFromCartHandler = (productId) => {
+    ctxDispatch({ type: "CLEAR_FROM_CART", payload: productId });
+    console.log(productId);
+  };
+
   // remove from cart handler
   const removeFromCartHandler = (product) => {
-    const existItem = cartItems.find((item) => item.id === product.id);
+    const existItem = cartItems.find((item) => item._id === product._id);
     const quantity = (existItem.quantity -= 1);
     if (quantity <= 0) {
-      ctxDispatch({ type: "ADD_TO_CART", payload: { ...product, quantity } });
+      ctxDispatch({ type: "CLEAR_FROM_CART", payload: product._id });
       toast.success("Item removed from cart");
       return;
     }
@@ -48,11 +54,6 @@ const Cart = () => {
     // console.log(cartItems);
   };
 
-  // clear from cart handler
-  const clearFromCartHandler = (productId) => {
-    ctxDispatch({ type: "CLEAR_FROM_CART", payload: productId });
-    console.log(productId);
-  };
   return (
     <div className="cart min-h-[70vh] ">
       <Helmet>
@@ -94,7 +95,7 @@ const Cart = () => {
             </div>
             {cartItems.map((product) => (
               // list (flex)
-              <div className="row flex" key={product.id}>
+              <div className="row flex" key={product._id}>
                 {/* list image */}
                 <div className="image basis-1/2  flex justify-center">
                   <div className="overflow-hidden w-32 h-32 bg-[#dddcdc]">
@@ -129,7 +130,7 @@ const Cart = () => {
               // right flex row(3)
               <div
                 className="row flex justify-evenly min-w-[400px] font-semibold h-32 items-center"
-                key={product.id}
+                key={product._id}
               >
                 <div className="basis-1/4">$ {product.price.toFixed(2)}</div>
                 {/* cart update section */}
@@ -162,7 +163,7 @@ const Cart = () => {
                   <CiTrash
                     className="font-bold cursor-pointer"
                     onClick={() => {
-                      clearFromCartHandler(product.id);
+                      clearFromCartHandler(product._id);
                     }}
                   />
                 </div>

@@ -1,16 +1,59 @@
 import { Helmet } from "react-helmet-async";
 import Products from "../components/Product.jsx";
 import Rating from "../components/Rating.jsx";
-import data from "../utils/data.js";
+import LoadingPage from "../components/LoadingPage.jsx";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect, useReducer } from "react";
 import { toast } from "react-toastify";
 
 // context
 import { Store } from "../services/Store.jsx";
 
+// backend url
+import backendInstance from "../utils/api.js";
+
+// helpers
+import getError from "../utils/helper.js";
+
+// Reducer
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "FETCH_DATA":
+      return { loading: true, products: [] };
+    // success
+    case "FETCH_SUCCESS":
+      const { products } = action.payload;
+      // console.log(products);
+      return { loading: false, products: products };
+
+    // failed fetch
+    case "FETCH_FAIL":
+      return { loading: false, products: [] };
+  }
+};
+
+const initialState = {
+  loading: true,
+  products: [],
+};
+
 const Home = () => {
-  const { products } = data;
+  const [{ loading, products }, dispatch] = useReducer(reducer, initialState);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        dispatch({ type: "FETCH_DATA" });
+        const { data } = await backendInstance.get("/api/products");
+        // console.log(data);
+        dispatch({ type: "FETCH_SUCCESS", payload: data });
+      } catch (error) {
+        dispatch({ type: "FETCH_FAIL" });
+        toast.error(getError(error));
+      }
+    };
+    fetchData();
+  }, []);
+  // const { products } = data;
   const featuredProducts = [];
   const allProducts = [];
   const { state, ctxDispatch } = useContext(Store);
@@ -29,7 +72,7 @@ const Home = () => {
 
   // add to cart Handler
   const addToCartHandler = (product) => {
-    const existItem = cartItems.find((item) => item.id === product.id);
+    const existItem = cartItems.find((item) => item._id === product._id);
     const quantity = existItem ? (existItem.quantity += 1) : 1;
     if (product.countInStock < quantity) {
       toast.error("stock is less than quantity needed");
@@ -51,13 +94,16 @@ const Home = () => {
         <title>Cartyzone | Home</title>
       </Helmet>
       {/* featured Products */}
-      <h1 className="text-center sm:text-2xl font-bold">Featured Products</h1>
+      {!loading && (
+        <h1 className="text-center sm:text-2xl font-bold">Featured Products</h1>
+      )}
+      {loading && <LoadingPage />}
       <div className="featured-products grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
         {featuredProducts.map((product) => (
           // featured container
           <div
             className="featured basis-[30%] flex items-center justify-center h-40 "
-            key={product.id}
+            key={product._id}
           >
             {/* image section */}
             <div className="image basis-1/2 bg-img h-full  overflow-hidden up">
@@ -113,7 +159,7 @@ const Home = () => {
         ))}
       </div>
       {/* Products */}
-      <Products products={allProducts} />
+      {!loading && <Products products={allProducts} />}
     </div>
   );
 };

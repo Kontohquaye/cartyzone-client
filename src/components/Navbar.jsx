@@ -56,7 +56,7 @@ const Navbar = () => {
             <div className="sm:flex sm:items-center absolute right-0 bg-primary-200 sm: sm:p-0 sm:bg-transparent sm:static">
               {/* category section */}
               <div className="category-section flex items-center font-semibold sm:mr-3 cursor-pointer sm:hover:text-accent p-2 mb-1 sm:p-0 sm:mb-0 hover:bg-secondary  sm:hover:bg-transparent">
-                <BiCategoryAlt className="font-bold" />
+                <BiCategoryAlt className="font-bold text-2xl" />
                 <span>Categories</span>
               </div>
 
@@ -84,7 +84,7 @@ const Navbar = () => {
             <div className="hidden sm:flex sm:items-center   ">
               {/* category section */}
               <div className="category-section flex items-center font-semibold mr-3 cursor-pointer hover:text-accent">
-                <BiCategoryAlt className="font-bold" />
+                <BiCategoryAlt className="font-bold text-2xl" />
                 <span>Categories</span>
               </div>
 
