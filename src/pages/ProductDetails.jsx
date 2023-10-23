@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Rating from "../components/Rating";
 import LoadingPage from "../components/LoadingPage";
+import Error from "./Error";
 import { toast } from "react-toastify";
 import { useContext, useEffect, useReducer } from "react";
 import { Store } from "../services/Store";
@@ -16,27 +17,31 @@ import getError from "../utils/helper.js";
 const reducer = (state, action) => {
   switch (action.type) {
     case "FETCH_DATA":
-      return { loading: true, product: {} };
+      return { loading: true, product: {}, error: "" };
     // success
     case "FETCH_SUCCESS":
       const { product } = action.payload;
       // console.log(products);
-      return { loading: false, product: product };
+      return { loading: false, product: product, error: "" };
 
     // failed fetch
     case "FETCH_FAIL":
-      return { loading: false, product: {} };
+      return { loading: false, product: {}, error: action.payload };
   }
 };
 
 const initialState = {
   loading: true,
+  error: "",
   product: {},
 };
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const [{ loading, product }, dispatch] = useReducer(reducer, initialState);
+  const [{ loading, product, error }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -44,9 +49,8 @@ const ProductDetails = () => {
         const { data } = await backendInstance.get(`/api/products/${id}`);
         // console.log(data);
         dispatch({ type: "FETCH_SUCCESS", payload: data });
-        console.log(data);
       } catch (error) {
-        dispatch({ type: "FETCH_FAIL" });
+        dispatch({ type: "FETCH_FAIL", payload: getError(error) });
         toast.error(getError(error));
       }
     };
@@ -59,8 +63,7 @@ const ProductDetails = () => {
     },
     ctxDispatch,
   } = useContext(Store);
-  // const product = products.find((x) => x.slug === slug);
-  console.log(product);
+  // console.log(product);
   const handleClick = () => {
     toast.error("out of stock");
   };
@@ -79,14 +82,15 @@ const ProductDetails = () => {
   };
 
   return (
-    <div className="product-details min-h-[80vh]">
+    <div className="product-details min-h-[80vh] ">
       <Helmet>
         <title>Product Details</title>
       </Helmet>
       {/* details section */}
+      {error && <Error />}
       {loading && <LoadingPage />}
       {product && !loading && (
-        <div className="details sm:flex   my-4  gap-2 sm:h-[60vh]">
+        <div className="details sm:flex   my-4  gap-2 sm:min-h-[60vh]">
           {/* image section */}
           <div className="image overflow-hidden h-96 md:h-full bg-img w-full">
             <img
@@ -97,7 +101,7 @@ const ProductDetails = () => {
           </div>
           {/*  */}
           {/* info */}
-          <div className="info mt-3  sm:mt-0 h-full  w-full sm:flex sm:flex-col ">
+          <div className="info mt-3  sm:mt-0 min-h-full  w-full sm:flex sm:flex-col ">
             <div className="top-details">
               <div>
                 <h1 className="font-bold  text-2xl">{product.name}</h1>

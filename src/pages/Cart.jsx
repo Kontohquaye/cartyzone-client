@@ -1,16 +1,12 @@
 import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { Store } from "../services/Store";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import emptyCart from "../assets/empty-cart.jpg";
 import { CiTrash } from "react-icons/ci";
 import { toast } from "react-toastify";
 
 const Cart = () => {
-  const navigate = useNavigate();
-  const redirectBack = () => {
-    navigate(-1);
-  };
   const {
     state: {
       cart: { cartItems },
@@ -72,11 +68,8 @@ const Cart = () => {
           />
           <p className="font-semibold text-center">
             Cart is empty,{" "}
-            <span
-              className="underline text-blue-600 whitespace-nowrap"
-              onClick={redirectBack}
-            >
-              <Link>Go Shopping</Link>
+            <span className="underline text-blue-600 whitespace-nowrap">
+              <Link to="/">Go Shopping</Link>
             </span>
           </p>
         </div>
@@ -185,7 +178,7 @@ const Cart = () => {
               </span>
             </div>
             <div className="check-out-btn">
-              <Link to="/signin?redirect=shipping">
+              <Link to="/account/signin?redirect=/shipping">
                 <button className="bg-secondary font-bold py-2 px-4 rounded-md">
                   Proceed to Checkout
                 </button>

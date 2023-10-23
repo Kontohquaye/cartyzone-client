@@ -5,7 +5,7 @@ const Footer = () => {
   const date = new Date(timeStamp);
   const day = date.getFullYear();
   return (
-    <div className="footer h-[20vh] bg-primary-200 text-white flex flex-col items-center justify-center p-2 mt-4">
+    <div className="footer min-h-[20vh] bg-primary-200 text-white flex flex-col items-center justify-center p-2 mt-4 ">
       <div className="row-one">
         <p className="font-bold text-center ">
           <span className="font-thin mr-1">&copy;</span>
@@ -16,7 +16,7 @@ const Footer = () => {
         </p>
       </div>
       <div className="row-two">Supported Payments</div>
-      <div className="row-three mt-2">
+      <div className="row-three mt-1">
         <img src={payment} alt="supported payments " />
       </div>
     </div>

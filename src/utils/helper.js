@@ -1,3 +1,4 @@
+// errorr handler
 const getError = (error) => {
   return error.message;
 };

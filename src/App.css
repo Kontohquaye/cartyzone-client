@@ -75,9 +75,18 @@
 
 /* media queries */
 /* featured */
+@media screen and (min-width: 300px) {
+  .sign-in form {
+    width: 250px;
+  }
+}
 @media screen and (min-width: 460px) {
   .featured .image {
     flex-basis: 40%;
+  }
+
+  .sign-in form {
+    width: 300px;
   }
 }
 
