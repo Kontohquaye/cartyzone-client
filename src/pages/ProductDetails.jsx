@@ -90,7 +90,7 @@ const ProductDetails = () => {
       {error && <Error />}
       {loading && <LoadingPage />}
       {product && !loading && (
-        <div className="details sm:flex   my-4  gap-2 sm:min-h-[60vh]">
+        <div className="details sm:flex   my-4  gap-2 sm:min-h-[60vh] h-[60vh]">
           {/* image section */}
           <div className="image overflow-hidden h-96 md:h-full bg-img w-full">
             <img
@@ -101,7 +101,7 @@ const ProductDetails = () => {
           </div>
           {/*  */}
           {/* info */}
-          <div className="info mt-3  sm:mt-0 min-h-full  w-full sm:flex sm:flex-col ">
+          <div className="info mt-3  sm:mt-0 min-h-full h-full w-full sm:flex sm:flex-col ">
             <div className="top-details">
               <div>
                 <h1 className="font-bold  text-2xl">{product.name}</h1>
