@@ -4,6 +4,9 @@ export const Store = createContext();
 
 // initial state
 const initialState = {
+  userInfo: localStorage.getItem("userInfo")
+    ? JSON.parse(localStorage.getItem("userInfo"))
+    : {},
   cart: {
     cartItems: localStorage.getItem("cartItems")
       ? JSON.parse(localStorage.getItem("cartItems"))
@@ -45,6 +48,16 @@ const reducer = (state, action) => {
         ...state,
         cart: { ...state.cart, cartItems: updatedCartItems },
       };
+
+    // sign up and sign in
+    case "SIGNIN": {
+      const userDetails = action.payload;
+      console.log(userDetails);
+      return { ...state, userInfo: { ...userDetails } };
+    }
+    case "SIGNUP":
+      const userDetails = action.payload;
+      return { ...state, userInfo: { ...userDetails } };
 
     default:
       return { ...state, cart: { ...state.cart } };

@@ -8,6 +8,8 @@ import { Store } from "../services/Store";
 
 const Navbar = () => {
   const { state } = useContext(Store);
+  const { userInfo } = state;
+  const { username } = userInfo;
   const [showMenu, setShowMenu] = useState(false);
   const location = useLocation();
 
@@ -77,7 +79,9 @@ const Navbar = () => {
               {/* account section */}
               <div className="flex cursor-pointer sm:hover:text-accent p-2 sm:p-0 hover:bg-secondary sm:hover:bg-transparent">
                 <MdAccountCircle className="text-2xl cursor-pointer  sm:ml-4 mr-1" />
-                <span className="font-semibold sm:ml-1">Account</span>
+                <span className="font-semibold sm:ml-1">
+                  {username ? username : "Account"}
+                </span>
               </div>
             </div>
           ) : (
@@ -114,9 +118,11 @@ const Navbar = () => {
                 </div>
               </Link>
               {/* account section */}
-              <div className="flex cursor-pointer hover:text-accent  hover:bg-transparent">
+              <div className="flex cursor-pointer hover:text-accent  hover:bg-transparent ">
                 <MdAccountCircle className="text-2xl cursor-pointer  ml-4" />
-                <span className="font-semibold ml-1">Account</span>
+                <span className="font-semibold ml-1 ">
+                  {username ? username : "Account"}
+                </span>
               </div>
             </div>
           )}

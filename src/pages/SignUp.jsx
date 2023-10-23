@@ -1,10 +1,13 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { useEffect, useReducer, useState } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import { toast } from "react-toastify";
 
 // api
 import backendInstance from "../utils/api";
+
+// context import
+import { Store } from "../services/Store";
 
 // reducer function
 const reducer = (state, action) => {
@@ -25,6 +28,8 @@ const reducer = (state, action) => {
 };
 
 const SignUp = () => {
+  const { state, ctxDispatch } = useContext(Store);
+  const { userInfo } = state;
   const navigate = useNavigate();
   const { search } = useLocation();
   const redirectUrl = new URLSearchParams(search).get("redirect");
@@ -37,7 +42,15 @@ const SignUp = () => {
   });
 
   // checkuser
-  // doi!
+  useEffect(() => {
+    userInfo && userInfo.length > 0
+      ? redirect
+        ? navigate(redirect)
+        : navigate("/")
+      : redirect
+      ? navigate(`/account/signup?redirect=${redirect}`)
+      : navigate("/account/signup");
+  }, [navigate, userInfo, redirect]);
 
   // details
   const [userName, setUserName] = useState("");
@@ -59,7 +72,9 @@ const SignUp = () => {
       // fetch
       try {
         dispatch({ type: "SIGNUP_FETCH" });
-        const userInfo = await backendInstance.post(
+        const {
+          data: { user },
+        } = await backendInstance.post(
           "/api/users/signup",
           {
             username: userName.toLowerCase(),
@@ -69,7 +84,9 @@ const SignUp = () => {
           { withCredentials: true }
         );
         dispatch({ type: "FETCH_SUCCESS" });
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        ctxDispatch({ type: "SIGNUP", payload: user });
+        localStorage.setItem("userInfo", JSON.stringify(user));
+        toast.success("signup successful");
         navigate(redirect ? redirect : "/");
       } catch (error) {
         const {
@@ -87,11 +104,18 @@ const SignUp = () => {
         <h1 className="font-bold text-2xl">Sign Up</h1>
         <form className="flex flex-col justify-center  ">
           {/* username */}
-          <div className="username flex flex-col gap-1 mb-1">
+          <div
+            className={
+              error && error.username
+                ? "username flex flex-col gap-1"
+                : "username flex flex-col gap-1 mb-1"
+            }
+          >
             <label htmlFor="username" className="font-semibold">
               Username :
             </label>
             <input
+              required={true}
               type="username"
               name="username"
               id="username"
@@ -99,7 +123,11 @@ const SignUp = () => {
               onChange={(e) => {
                 setUserName(e.target.value);
               }}
-              className="border-[1px] border-accent p-2 bg-white"
+              className={
+                error && error.username
+                  ? "border-[1px] border-secondary p-2 bg-white "
+                  : "border-[1px] border-accent p-2 bg-white"
+              }
             />
             {error && (
               <p className="text-center text-secondary font-semibold">
@@ -108,11 +136,18 @@ const SignUp = () => {
             )}
           </div>
           {/* email */}
-          <div className="email flex flex-col gap-1 mb-1">
+          <div
+            className={
+              error && error.email
+                ? "email flex flex-col gap-1"
+                : "email flex flex-col gap-1 mb-1"
+            }
+          >
             <label htmlFor="email" className="font-semibold">
               Email :
             </label>
             <input
+              required={true}
               type="email"
               name="email"
               id="email"
@@ -120,7 +155,11 @@ const SignUp = () => {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
-              className="border-[1px] border-accent p-2 bg-white"
+              className={
+                error && error.email
+                  ? "border-[1px] border-secondary p-2 bg-white "
+                  : "border-[1px] border-accent p-2 bg-white"
+              }
             />
             {error && (
               <p className="text-center text-secondary font-semibold">
@@ -136,14 +175,18 @@ const SignUp = () => {
             <div className="input relative ">
               <input
                 type={showPassword ? "text" : "password"}
-                required
+                required={true}
                 name="password"
                 id="password"
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
-                className="border-[1px] border-accent p-2  mb-1 w-full"
+                className={
+                  error && error.username
+                    ? "border-[1px] border-secondary p-2 bg-white w-full"
+                    : "border-[1px] border-accent p-2 bg-white mb-1 w-full"
+                }
               />
               {/* icon */}
               {showPassword ? (
@@ -176,7 +219,7 @@ const SignUp = () => {
             <div className="input relative ">
               <input
                 type={showConfirmPassword ? "text" : "password"}
-                required
+                required={true}
                 name="confirmPassword"
                 id="confirmpassword"
                 value={confirmPassword}
@@ -219,7 +262,13 @@ const SignUp = () => {
           </button>
           <div className="info font-light text-center">
             Have an account?
-            <Link to="/signup">
+            <Link
+              to={
+                redirect
+                  ? `/account/signin?redirect=${redirect}`
+                  : "/account/signin"
+              }
+            >
               <span className="text-blue-600 hover:underline font-semibold">
                 Sign In
               </span>
