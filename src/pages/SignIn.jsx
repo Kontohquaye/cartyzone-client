@@ -44,7 +44,7 @@ const SignIn = () => {
 
   // user singned in
   useEffect(() => {
-    userInfo && userInfo.length > 0
+    userInfo && userInfo.username
       ? redirect
         ? navigate(redirect)
         : navigate("/")

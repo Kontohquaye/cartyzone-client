@@ -178,7 +178,7 @@ const Cart = () => {
               </span>
             </div>
             <div className="check-out-btn">
-              <Link to="/account/signin?redirect=/shipping">
+              <Link to="/account/signin?redirect=/checkout">
                 <button className="bg-secondary font-bold py-2 px-4 rounded-md">
                   Proceed to Checkout
                 </button>
