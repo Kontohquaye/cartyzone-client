@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { TiShoppingCart } from "react-icons/ti";
 import { MdAccountCircle } from "react-icons/md";
 import { BiCategoryAlt } from "react-icons/bi";
@@ -14,6 +14,9 @@ const Navbar = () => {
   // large screens
   const [showAccountMenu, setShowAccountMenu] = useState(false);
   const location = useLocation();
+  const accountRef = useRef();
+  const hamburgerRef = useRef();
+  // console.log(accountRef.current.target);
 
   // on locatin change (navbar)
   useEffect(() => {
@@ -22,13 +25,11 @@ const Navbar = () => {
 
   // handle click outside
   document.addEventListener("click", (e) => {
-    // console.log(e.target.dataset.broad);
-    if (!e.target.dataset.broad) {
+    if (accountRef.current && !accountRef.current.contains(e.target)) {
       setShowAccountMenu(false);
     }
-    if (e.target.id !== "hamburger" && !e.target.dataset.svgmenu) {
-      // const customData = e.target.dataset.svg;
-      // console.log("Data attribute value:", customData);
+    // small screens
+    if (hamburgerRef.current && !hamburgerRef.current.contains(e.target)) {
       setShowMenu(false);
     }
   });
@@ -51,14 +52,16 @@ const Navbar = () => {
         {/*  */}
         <div className="relative">
           {/* hamburg... */}
-          <HiOutlineMenu
-            data-svgmenu={"menu"}
-            id="hamburger"
-            onClick={() => {
-              setShowMenu(!showMenu);
-            }}
-            className="text-2xl cursor-pointer hover:text-accent sm:hidden p-1 w-10 h-8"
-          />
+          <div ref={hamburgerRef}>
+            <HiOutlineMenu
+              id="hamburger"
+              onClick={() => {
+                setShowMenu(!showMenu);
+              }}
+              className="text-2xl cursor-pointer hover:text-accent sm:hidden p-1 w-10 h-8"
+            />
+          </div>
+
           {/* menu */}
           {showMenu ? (
             <div className="sm:flex sm:items-center absolute right-0 bg-primary-200 sm: sm:p-0 sm:bg-transparent sm:static">
@@ -85,7 +88,7 @@ const Navbar = () => {
               {/* account section */}
               <div className="flex cursor-pointer sm:hover:text-accent p-2 sm:p-0 hover:bg-secondary sm:hover:bg-transparent">
                 <MdAccountCircle className="text-2xl cursor-pointer  sm:ml-4 mr-1" />
-                <span className="font-semibold sm:ml-1">
+                <span className="font-semibold sm:ml-1 inline-block max-w-[100px] overflow-hidden text-ellipsis">
                   {username ? username : "Account"}
                 </span>
               </div>
@@ -126,20 +129,14 @@ const Navbar = () => {
               {/* account section */}
               <div className="account-section relative">
                 <div
-                  data-broad="lgscreen"
+                  ref={accountRef}
                   className="flex  cursor-pointer hover:text-accent  hover:bg-transparent "
                   onClick={() => {
                     setShowAccountMenu(!showAccountMenu);
                   }}
                 >
-                  <MdAccountCircle
-                    data-broad="lgscreen"
-                    className="text-2xl cursor-pointer  ml-4"
-                  />
-                  <span
-                    data-broad="lgscreen"
-                    className="font-semibold ml-1 inline-block max-w-[90px] overflow-hidden text-ellipsis whitespace-nowrap"
-                  >
+                  <MdAccountCircle className="text-2xl cursor-pointer  ml-4" />
+                  <span className="font-semibold ml-1 inline-block max-w-[90px] overflow-hidden text-ellipsis whitespace-nowrap">
                     {username ? username : "Account"}
                   </span>
                 </div>

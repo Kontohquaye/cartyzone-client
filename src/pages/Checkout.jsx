@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 // countries import / error handling
-import getError, { countries } from "../utils/helper";
+import { countries } from "../utils/helper";
 // context
 import { Store } from "../services/Store";
 // api
@@ -129,7 +129,7 @@ const Checkout = () => {
         dispatch({ type: "ADD_DISCOUNT", payload: value });
       }
       dispatch({ type: "PLACE_ORDER" });
-      const { data } = await backendInstance.post(
+      const { data: res } = await backendInstance.post(
         "/api/orders/order",
         {
           orderItems,
@@ -142,18 +142,18 @@ const Checkout = () => {
         },
         { withCredentials: true }
       );
-      if (data.error) {
-        dispatch({ type: "ORDER_ERROR", payload: data.error });
+      if (res.error) {
+        dispatch({ type: "ORDER_ERROR", payload: res.error });
       } else {
-        dispatch({ type: "ORDER_SUCCESS", payload: data });
+        dispatch({ type: "ORDER_SUCCESS", payload: res });
         ctxDispatch({
           type: "ORDER_SUCCESS",
-          payload: data.shippingDetails,
+          payload: res.shippingDetails,
         });
         localStorage.removeItem("cartItems");
         localStorage.setItem(
           "shippingDetails",
-          JSON.stringify(data.shippingDetails)
+          JSON.stringify(res.shippingDetails)
         );
         navigate("/");
       }
@@ -161,7 +161,12 @@ const Checkout = () => {
       const {
         response: { data },
       } = error;
-      toast.error(data.message);
+
+      if ((data.message = "Invalid coupon")) {
+        toast.info("enter a valid coupon or leave blank");
+      } else {
+        toast.error(data.message);
+      }
     }
   };
   return (
