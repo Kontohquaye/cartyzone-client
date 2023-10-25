@@ -78,6 +78,7 @@ const Home = () => {
   // add to cart Handler
   const addToCartHandler = (product) => {
     const existItem = cartItems.find((item) => item._id === product._id);
+
     const quantity = existItem ? (existItem.quantity += 1) : 1;
     if (product.countInStock < quantity) {
       toast.error("stock is less than quantity needed");

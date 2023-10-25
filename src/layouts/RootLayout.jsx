@@ -9,7 +9,7 @@ const RootLayout = () => {
   return (
     <div className="root-layout font-raleway h-[100vh]">
       <Navbar />
-      <main className="max-w-[1200px] mx-auto px-2 min-h-[80vh] overflow-y-auto ">
+      <main className="max-w-[1200px] mx-auto px-2 min-h-[80vh] overflow-y-auto">
         <Outlet />
       </main>
       <Footer />

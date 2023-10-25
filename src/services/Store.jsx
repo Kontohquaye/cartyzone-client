@@ -8,6 +8,9 @@ const initialState = {
     ? JSON.parse(localStorage.getItem("userInfo"))
     : {},
   cart: {
+    shippingDetails: localStorage.getItem("shippingDetails")
+      ? JSON.parse(localStorage.getItem("shippingDetails"))
+      : {},
     cartItems: localStorage.getItem("cartItems")
       ? JSON.parse(localStorage.getItem("cartItems"))
       : [],
@@ -58,6 +61,13 @@ const reducer = (state, action) => {
     case "SIGNUP":
       const userDetails = action.payload;
       return { ...state, userInfo: { ...userDetails } };
+
+    case "ORDER_SUCCESS":
+      const shippingDetails = action.payload;
+      return {
+        ...state,
+        cart: { shippingDetails: { ...shippingDetails }, cartItems: [] },
+      };
 
     default:
       return { ...state, cart: { ...state.cart } };
