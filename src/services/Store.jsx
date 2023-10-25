@@ -55,7 +55,7 @@ const reducer = (state, action) => {
     // sign up and sign in
     case "SIGNIN": {
       const userDetails = action.payload;
-      console.log(userDetails);
+      // console.log(userDetails);
       return { ...state, userInfo: { ...userDetails } };
     }
     case "SIGNUP":

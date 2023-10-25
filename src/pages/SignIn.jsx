@@ -67,7 +67,7 @@ const SignIn = () => {
       );
       dispatch({ type: "FETCH_SUCCESS" });
       localStorage.setItem("userInfo", JSON.stringify(user));
-      console.log(user);
+      // console.log(user);
       ctxDispatch({ type: "SIGNIN", payload: user });
       dispatch({ type: "RESET" });
       toast.success("signin successful");

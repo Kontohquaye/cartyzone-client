@@ -11,6 +11,8 @@ const Navbar = () => {
   const { userInfo } = state;
   const { username } = userInfo;
   const [showMenu, setShowMenu] = useState(false);
+  // large screens
+  const [showAccountMenu, setShowAccountMenu] = useState(false);
   const location = useLocation();
 
   // on locatin change (navbar)
@@ -20,6 +22,10 @@ const Navbar = () => {
 
   // handle click outside
   document.addEventListener("click", (e) => {
+    // console.log(e.target.dataset.broad);
+    if (!e.target.dataset.broad) {
+      setShowAccountMenu(false);
+    }
     if (e.target.id !== "hamburger" && !e.target.dataset.svgmenu) {
       // const customData = e.target.dataset.svg;
       // console.log("Data attribute value:", customData);
@@ -118,11 +124,44 @@ const Navbar = () => {
                 </div>
               </Link>
               {/* account section */}
-              <div className="flex cursor-pointer hover:text-accent  hover:bg-transparent ">
-                <MdAccountCircle className="text-2xl cursor-pointer  ml-4" />
-                <span className="font-semibold ml-1 ">
-                  {username ? username : "Account"}
-                </span>
+              <div className="account-section relative">
+                <div
+                  data-broad="lgscreen"
+                  className="flex  cursor-pointer hover:text-accent  hover:bg-transparent "
+                  onClick={() => {
+                    setShowAccountMenu(!showAccountMenu);
+                  }}
+                >
+                  <MdAccountCircle
+                    data-broad="lgscreen"
+                    className="text-2xl cursor-pointer  ml-4"
+                  />
+                  <span
+                    data-broad="lgscreen"
+                    className="font-semibold ml-1 inline-block max-w-[90px] overflow-hidden text-ellipsis whitespace-nowrap"
+                  >
+                    {username ? username : "Account"}
+                  </span>
+                </div>
+                {/* list */}
+                {showAccountMenu && (
+                  <ul className="capitalize font-medium absolute -right-2 top-[150%] bg-primary-200 w-[150px]">
+                    <Link to="/account/profile">
+                      <li className="px-2 py-1 hover:bg-secondary hover:cursor-pointer">
+                        profile
+                      </li>
+                    </Link>
+                    <Link to="/account/orders">
+                      <li className="px-2 py-1 hover:bg-secondary hover:cursor-pointer">
+                        order history
+                      </li>
+                    </Link>
+                    {/* signout */}
+                    <li className="px-2 py-1 hover:bg-secondary hover:cursor-pointer">
+                      signout
+                    </li>
+                  </ul>
+                )}
               </div>
             </div>
           )}

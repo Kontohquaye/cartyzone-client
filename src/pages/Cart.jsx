@@ -19,12 +19,12 @@ const Cart = () => {
   const addToCartHandler = (product) => {
     const existItem = cartItems.find((item) => item._id === product._id);
     const quantity = existItem ? (existItem.quantity += 1) : 1;
+    if (product.countInStock > quantity) {
+      ctxDispatch({ type: "ADD_TO_CART", payload: { ...product, quantity } });
+    }
     if (product.countInStock < quantity) {
       toast.error("stock is less than quantity needed");
       return;
-    }
-    if (product.countInStock > quantity) {
-      ctxDispatch({ type: "ADD_TO_CART", payload: { ...product, quantity } });
     }
     // console.log(cartItems);
   };
@@ -112,56 +112,57 @@ const Cart = () => {
             ))}
           </div>
           {/* right */}
-          <div className="right py-3 pl-9 min-w-[350px]">
-            <div className="title-section flex justify-evenly font-bold mb-2 min-w-[400px] items-center">
+          <div className="right py-3 pl-9  min-w-[350px]">
+            <div className="title-section flex  justify-evenly font-bold mb-2 min-w-[400px] items-center">
               <p className="basis-1/4 ">PRICE</p>
               <p className="basis-1/4 flex justify-center">QTY</p>
               <p className="basis-1/4 flex justify-center">TOTAL</p>
               <p className="basis-1/4 "></p>
             </div>
-            {cartItems.map((product) => (
-              // right flex row(3)
-              <div
-                className="row flex justify-evenly min-w-[400px] font-semibold h-32 items-center"
-                key={product._id}
-              >
-                <div className="basis-1/4">$ {product.price.toFixed(2)}</div>
-                {/* cart update section */}
-                <div className=" basis-1/4 flex justify-center">
-                  <div className="flex bg-img w-min">
-                    <div
-                      className="px-2 py-1 bg-[#dddcdc] cursor-pointer"
-                      onClick={() => {
-                        removeFromCartHandler(product);
-                      }}
-                    >
-                      <button>-</button>
-                    </div>
+            {cartItems &&
+              cartItems.map((product) => (
+                // right flex row(3)
+                <div
+                  className="row flex my-2 justify-evenly min-w-[400px] font-semibold h-32 items-center"
+                  key={product._id}
+                >
+                  <div className="basis-1/4">$ {product.price.toFixed(2)}</div>
+                  {/* cart update section */}
+                  <div className=" basis-1/4 flex justify-center">
+                    <div className="flex bg-img w-min">
+                      <div
+                        className="px-2 py-1 bg-[#dddcdc] cursor-pointer"
+                        onClick={() => {
+                          removeFromCartHandler(product);
+                        }}
+                      >
+                        <button className="w-full h-full">-</button>
+                      </div>
 
-                    <p className="px-2 py-1 mx-[2px]">{product.quantity}</p>
-                    <div
-                      className="px-2 py-1 bg-[#dddcdc] cursor-pointer"
-                      onClick={() => {
-                        addToCartHandler(product);
-                      }}
-                    >
-                      <button>+</button>
+                      <p className="px-2 py-1 mx-[2px]">{product.quantity}</p>
+                      <div
+                        className="px-2 py-1 bg-[#dddcdc] cursor-pointer"
+                        onClick={() => {
+                          addToCartHandler(product);
+                        }}
+                      >
+                        <button className="w-full h-full">+</button>
+                      </div>
                     </div>
                   </div>
+                  <div className="basis-1/4 flex justify-center">
+                    $ {(product.price * product.quantity).toFixed(2)}
+                  </div>
+                  <div className="basis-1/4 flex justify-center">
+                    <CiTrash
+                      className="font-bold cursor-pointer"
+                      onClick={() => {
+                        clearFromCartHandler(product._id);
+                      }}
+                    />
+                  </div>
                 </div>
-                <div className="basis-1/4 flex justify-center">
-                  $ {(product.price * product.quantity).toFixed(2)}
-                </div>
-                <div className="basis-1/4 flex justify-center">
-                  <CiTrash
-                    className="font-bold cursor-pointer"
-                    onClick={() => {
-                      clearFromCartHandler(product._id);
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       )}

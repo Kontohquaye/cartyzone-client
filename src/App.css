@@ -169,11 +169,6 @@
   }
 }
 
-@media screen and (max-width: 799px) {
-  .checkout .content .details {
-  }
-}
-
 /* animations */
 @keyframes rotation {
   0% {
