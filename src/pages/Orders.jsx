@@ -130,7 +130,7 @@ const Orders = () => {
                   </div>
                   <div className="py-2 overflow-hidden">
                     <Link
-                      to={`account/orders/order/${order._id}`}
+                      to={`/account/orders/order/${order._id}`}
                       className="max-w-full inline-block text-ellipsis hover:text-blue-500 hover:underline"
                     >
                       view details
