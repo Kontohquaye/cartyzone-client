@@ -25,8 +25,8 @@ const reducer = (state, action) => {
     case "ORDER_ERROR":
       const err = action.payload;
       return { ...state, error: err, loading: false };
-    case "ADD_DISCOUNT":
-      return { ...state, discount: action.payload };
+    // case "ADD_DISCOUNT":
+    //   return { ...state, discount: action.payload };
     default:
       return state;
   }
@@ -65,10 +65,10 @@ const Checkout = () => {
   const [postalCode, setPostalCode] = useState(
     shippingDetails ? shippingDetails.postalCode : ""
   );
-  const [{ loading, error, discount }, dispatch] = useReducer(reducer, {
+  const [{ loading, error }, dispatch] = useReducer(reducer, {
     loading: false,
     error: "",
-    discount: 0,
+    // discount: 0,
   });
 
   // console.log(cartItems);
@@ -104,7 +104,6 @@ const Checkout = () => {
       ...item,
       product: item._id,
     }));
-
     //
     const shippingDetails = {
       firstName,
@@ -118,17 +117,28 @@ const Checkout = () => {
     };
     e.preventDefault();
     // coupon
+
     try {
+      var discount = 0;
       if (coupon !== "") {
         const {
           data: { value },
         } = await backendInstance.post("/api/coupons/coupon/use", {
           name: coupon,
         });
+
+        if (value) {
+          discount = value;
+          // console.log(value, discount);
+        } else {
+          discount = 0;
+        }
         //second fetch
-        dispatch({ type: "ADD_DISCOUNT", payload: value });
+        // dispatch({ type: "ADD_DISCOUNT", payload: val });
       }
+
       dispatch({ type: "PLACE_ORDER" });
+      const date = new Date(Date.now());
       const { data: res } = await backendInstance.post(
         "/api/orders/order",
         {
@@ -139,9 +149,11 @@ const Checkout = () => {
           taxPrice,
           totalPrice: totalPrice - discount,
           discount,
+          date: date,
         },
         { withCredentials: true }
       );
+      // console.log(res);
       if (res.error) {
         dispatch({ type: "ORDER_ERROR", payload: res.error });
       } else {
@@ -158,6 +170,7 @@ const Checkout = () => {
         navigate("/");
       }
     } catch (error) {
+      console.log(error);
       const {
         response: { data },
       } = error;

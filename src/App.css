@@ -73,6 +73,11 @@
   padding: 2px;
 }
 
+/* menu */
+/* .navbar .hamburger-small:hover + .account-menu {
+  display: block;
+} */
+
 /* media queries */
 /* featured */
 @media screen and (min-width: 300px) {

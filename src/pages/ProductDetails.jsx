@@ -92,7 +92,7 @@ const ProductDetails = () => {
       {product && !loading && (
         <div className="details sm:flex   my-4  gap-2 sm:min-h-[60vh] h-[60vh]">
           {/* image section */}
-          <div className="image overflow-hidden h-96 md:h-full bg-img w-full">
+          <div className="image overflow-hidden h-full md:h-full bg-img w-full">
             <img
               src={product.image}
               alt={product.name}
@@ -101,7 +101,7 @@ const ProductDetails = () => {
           </div>
           {/*  */}
           {/* info */}
-          <div className="info mt-3  sm:mt-0 min-h-full h-full w-full sm:flex sm:flex-col ">
+          <div className="info sm:overflow-y-auto mt-3  sm:mt-0 min-h-full  h-full w-full sm:flex sm:flex-col ">
             <div className="top-details">
               <div>
                 <h1 className="font-bold  text-2xl">{product.name}</h1>
@@ -139,7 +139,7 @@ const ProductDetails = () => {
               </p>
             </div>
             {/* bottom section */}
-            <div className="bottom-details sm:flex sm:flex-col sm:justify-between h-full ">
+            <div className="bottom-details sm:flex sm:flex-col sm:justify-between h-min sm:h-full ">
               <div className="mb-2 sm:mb-0">
                 <p className="font-semibold">Product description :</p>
                 <p className="max-h-24 overflow-scroll w-full whitespace-normal overflow-x-hidden">

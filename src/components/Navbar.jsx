@@ -13,15 +13,30 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   // large screens
   const [showAccountMenu, setShowAccountMenu] = useState(false);
+  const [showMinMenu, setShowMinMenu] = useState(false);
   const location = useLocation();
   const accountRef = useRef();
   const hamburgerRef = useRef();
+  const accountSectionRef = useRef();
+  const listRef = useRef();
   // console.log(accountRef.current.target);
 
   // on locatin change (navbar)
   useEffect(() => {
     setShowMenu(false);
   }, [location]);
+
+  // min menu display
+  const handleMenuDisplay = (evt) => {
+    setShowMinMenu(true);
+
+    if (
+      accountSectionRef.current &&
+      !accountSectionRef.current.contains(evt.target)
+    ) {
+      setShowMinMenu(false);
+    }
+  };
 
   // handle click outside
   document.addEventListener("click", (e) => {
@@ -31,6 +46,19 @@ const Navbar = () => {
     // small screens
     if (hamburgerRef.current && !hamburgerRef.current.contains(e.target)) {
       setShowMenu(false);
+    }
+
+    if (
+      accountSectionRef.current &&
+      !accountSectionRef.current.contains(e.target)
+    ) {
+      setShowMinMenu(false);
+    }
+    if (
+      accountSectionRef.current &&
+      accountSectionRef.current.contains(e.target)
+    ) {
+      setShowMenu(true);
     }
   });
 
@@ -57,6 +85,7 @@ const Navbar = () => {
               id="hamburger"
               onClick={() => {
                 setShowMenu(!showMenu);
+                setShowMinMenu(false);
               }}
               className="text-2xl cursor-pointer hover:text-accent sm:hidden p-1 w-10 h-8"
             />
@@ -86,11 +115,64 @@ const Navbar = () => {
                 </div>
               </Link>
               {/* account section */}
-              <div className="flex cursor-pointer sm:hover:text-accent p-2 sm:p-0 hover:bg-secondary sm:hover:bg-transparent">
-                <MdAccountCircle className="text-2xl cursor-pointer  sm:ml-4 mr-1" />
-                <span className="font-semibold sm:ml-1 inline-block max-w-[100px] overflow-hidden text-ellipsis">
-                  {username ? username : "Account"}
-                </span>
+              <div
+                className="relative cursor-pointer sm:hover:text-accent "
+                onMouseOver={(e) => handleMenuDisplay(e)}
+                onMouseLeave={() => {
+                  setShowMinMenu(false);
+                }}
+                ref={accountSectionRef}
+              >
+                <div
+                  className="flex hamburger-small hover:bg-secondary w-full h-full p-2 sm:p-0 sm:hover:bg-transparent"
+                  onClick={() => {
+                    setShowMinMenu(true);
+                  }}
+                >
+                  <MdAccountCircle className="text-2xl cursor-pointer  sm:ml-4 mr-1" />
+                  <span className="font-semibold sm:ml-1 inline-block max-w-[100px] overflow-hidden text-ellipsis">
+                    {username ? username : "Account"}
+                  </span>
+                </div>
+                {/* menu list */}
+                <ul
+                  ref={listRef}
+                  className={
+                    showMinMenu
+                      ? "account-menu sub-menu"
+                      : "account-menu sub-menu hidden"
+                  }
+                >
+                  <Link to="/account/profile">
+                    <li
+                      onClick={() => {
+                        setShowMenu(false);
+                      }}
+                      className="px-2 py-1 hover:bg-secondary hover:cursor-pointer"
+                    >
+                      profile
+                    </li>
+                  </Link>
+                  <Link to="/account/orders">
+                    <li
+                      onClick={() => {
+                        setShowMenu(false);
+                      }}
+                      className="px-2 py-1 hover:bg-secondary hover:cursor-pointer"
+                    >
+                      order history
+                    </li>
+                  </Link>
+                  {/* signout */}
+                  <li
+                    onClick={() => {
+                      setShowMenu(false);
+                    }}
+                    className="px-2 py-1 hover:bg-secondary hover:cursor-pointer"
+                  >
+                    signout
+                  </li>
+                </ul>
               </div>
             </div>
           ) : (
