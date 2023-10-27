@@ -1,6 +1,7 @@
 import { useContext, useEffect, useReducer } from "react";
 import { toast } from "react-toastify";
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow, format, parseISO } from "date-fns";
+import { CiTrash } from "react-icons/ci";
 
 // pages
 import LoadingPage from "../components/LoadingPage";
@@ -12,6 +13,7 @@ import backendInstance from "../utils/api";
 // context
 import { Store } from "../services/Store";
 import { Link } from "react-router-dom";
+import EmptyCart from "../components/EmptyCart";
 
 // reduder
 const reducer = (state, action) => {
@@ -22,14 +24,27 @@ const reducer = (state, action) => {
       return { error: "", loading: false, orders: action.payload };
     case "FETCH_ERROR":
       return { orders: [], loading: false, error: action.payload };
+    case "FETCH_DELETE":
+      return { ...state, deleting: true };
+    case "DELETE_SUCCESS":
+      return {
+        ...state,
+        deleting: false,
+        orders: state.orders.filter((order) => order._id !== action.payload),
+      };
+    case "DELETE_ERROR":
+      return { ...state, deleting: false };
+    default:
+      return state;
   }
 };
 
 const Orders = () => {
-  const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
+  const [{ loading, error, orders, deleting }, dispatch] = useReducer(reducer, {
     loading: false,
     error: "",
     orders: [],
+    deleting: false,
   });
   const {
     state: { userInfo },
@@ -47,13 +62,25 @@ const Orders = () => {
           { user: id },
           { withCredentials: true }
         );
-        const updatedOrders = orders.map((item) => ({
-          ...item,
-          date: formatDistanceToNow(new Date(item.date), { addSuffix: true }),
-        }));
+        const updatedOrders = orders.map((item) => {
+          const currentDate = new Date(Date.now());
+          const editedOrder = {
+            ...item,
+            formatedDate: format(parseISO(item.date), "MM/dd/yy"),
+            dateDiff: Math.floor(
+              Math.abs(currentDate - new Date(item.date)) / 1000 / 60 / 60 / 24
+            ),
+            agoDate: formatDistanceToNow(new Date(parseISO(item.date)), {
+              addSuffix: true,
+            }),
+          };
+
+          // console.log(edited);
+          return editedOrder;
+        });
 
         // console.log(updatedArray);
-        console.log(orders);
+        // console.log(orders);
         dispatch({ type: "FETCH_SUCCESS", payload: updatedOrders });
       } catch (err) {
         const {
@@ -69,33 +96,63 @@ const Orders = () => {
     fetchOrders();
   }, []);
 
+  const handleDelete = async (itemId) => {
+    dispatch({ type: "FETCH_DELETE" });
+    try {
+      const {
+        data: { message },
+      } = await backendInstance.delete(`/api/orders/order/get/${itemId}`, {
+        withCredentials: true,
+      });
+      dispatch({ type: "DELETE_SUCCESS", payload: itemId });
+      toast.success(message);
+    } catch (err) {
+      dispatch({ type: "DELETE_ERROR" });
+      const {
+        response: {
+          data: { error },
+        },
+      } = err;
+      toast.error(error);
+    }
+  };
+
   return (
     <div className="orders">
+      {orders.length < 1 && <EmptyCart />}
       {loading && <LoadingPage />}
+      {deleting && <LoadingPage />}
       {error && <ErrorPage />}
-      {!loading && !error && orders && orders.length > 0 && (
+      {!loading && !deleting && !error && orders && orders.length > 0 && (
         <div className="content mt-8 ">
           <h2 className="font-medium">Recent Orders</h2>
           <div className="table w-full min-w-[860px] overflow-x-auto h-[250px]">
-            <div className="head grid grid-cols-6 border-b-[1px] border-img font-light">
-              <div className="order-id py-2 flex-1">Order id</div>
-              <div className="order-date py-2 flex-1">Order date</div>
-              <div className="order-price py-2 flex-1">Total</div>
-              <div className="order-paid py-2 flex-1">payment status</div>
-              <div className="order-delivered py-2 flex-1">delivery status</div>
-              <div className="order-details py-2 flex-1"></div>
+            <div className="head grid grid-cols-7 mb-2 border-b-[1px] border-img font-light">
+              <div className="order-id py-2 ">Order id</div>
+              <div className="order-date py-2 ">Order date</div>
+              <div className="order-price py-2 ">Total</div>
+              <div className="order-paid py-2 ">payment status</div>
+              <div className="order-delivered py-2 ">delivery status</div>
+              <div className="order-details py-2 ">details</div>
+              <div className="order-details py-2 "></div>
             </div>
             <div className="order-details">
               {orders.map((order) => (
                 <div
-                  className="order-list grid grid-cols-6 gap-2 "
+                  className="order-list grid grid-cols-7 gap-2 "
                   key={order._id}
                 >
                   <div className=" overflow-auto py-2">{order._id}</div>
                   <div className="py-2 overflow-hidden max-w-full">
-                    <span className="max-w-full font-light inline-block text-ellipsis">
-                      {order.date}
-                    </span>
+                    {order.dateDiff < 1 ? (
+                      <span className="max-w-full text-sm text-[#ccc] overflow-hidden font-light inline-block text-ellipsis whitespace-nowrap">
+                        {order.agoDate}
+                      </span>
+                    ) : (
+                      <span className="max-w-full font-light inline-block text-ellipsis whitespace-nowrap">
+                        order.formatedDate
+                      </span>
+                    )}
                   </div>
                   <div className="py-2 overflow-hidden">
                     <span className="max-w-full font-poppins inline-block text-ellipsis">
@@ -135,6 +192,12 @@ const Orders = () => {
                     >
                       view details
                     </Link>
+                  </div>
+                  <div className="delete py-2 ">
+                    <CiTrash
+                      className="cursor-pointer"
+                      onClick={() => handleDelete(order._id)}
+                    />
                   </div>
                 </div>
               ))}

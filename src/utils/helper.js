@@ -264,3 +264,42 @@ export const countries = [
 //     countries.map((country) => countriees.push(country.name.common));
 //     console.log(countriees.sort().slice(-150));
 //   });
+
+// <!DOCTYPE html>
+{
+  /* <html>
+<head>
+    <title>Print Specific Portion Example</title>
+</head>
+<body>
+    <button id="printButton">Print Portion</button>
+
+    <div id="contentToPrint">
+        <h1>Printable Content</h1>
+        <p>This is the content you want to print.</p>
+    </div>
+
+    <script>
+        document.getElementById("printButton").addEventListener("click", function() {
+            var contentToPrint = document.getElementById("contentToPrint").innerHTML;
+            var printWindow = window.open('', '', 'width=600,height=600');
+            
+            printWindow.document.open();
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Print Portion Example</title>
+                </head>
+                <body>
+                    ${contentToPrint}
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+            printWindow.close();
+        });
+    </script>
+</body>
+</html> */
+}

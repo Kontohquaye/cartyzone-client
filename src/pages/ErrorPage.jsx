@@ -3,7 +3,7 @@ import errorImage from "../assets/404 Error-rafiki.svg";
 
 const ErrorPage = () => {
   return (
-    <div className="error w-full  overflow-hidden h-full o">
+    <div className="error w-full  overflow-hidden  h-full flex flex-col justify-center items-center">
       <div className="">
         <img
           src={errorImage}
