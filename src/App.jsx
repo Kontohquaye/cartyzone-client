@@ -32,6 +32,7 @@ const router = createBrowserRouter(
       <Route path="products/:id" element={<ProductDetails />} />
       <Route path="cart" element={<Cart />} />
       <Route path="checkout" element={<Checkout />} />
+      {/* account route */}
       <Route
         path="account"
         element={<AccountLayout />}
@@ -46,9 +47,10 @@ const router = createBrowserRouter(
           errorElement={<Error />}
         >
           <Route index element={<Orders />} />
-          <Route path="order/:id" element={<OrderDetail />} />
         </Route>
       </Route>
+      {/* order details */}
+      <Route path="/orders/order/:id" element={<OrderDetail />} />
       <Route path="*" element={<ErrorPage />} />
     </Route>
   )
