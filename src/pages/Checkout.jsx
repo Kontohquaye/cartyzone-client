@@ -123,7 +123,7 @@ const Checkout = () => {
           dispatch({ type: "DISCOUNT_ADDED" });
           setDiscount(value);
           toast.success(`$ ${value}.00 discount added`);
-          console.log(value, discount);
+          // console.log(value, discount);
         } else {
           setDiscount(0);
           dispatch({ type: "DISCOUNT_ERROR" });

@@ -46,13 +46,9 @@ const SignIn = () => {
 
   // user singned in
   useEffect(() => {
-    userInfo && userInfo.username
-      ? redirect
-        ? navigate(redirect)
-        : navigate("/")
-      : redirect
-      ? navigate(`/account/signin?redirect=${redirect}`)
-      : navigate("/account/signin");
+    if (userInfo && userInfo.username) {
+      navigate(redirect);
+    }
   }, [navigate, userInfo, redirect]);
 
   // sign in functionality

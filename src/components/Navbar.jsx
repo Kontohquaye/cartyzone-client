@@ -68,7 +68,7 @@ const Navbar = () => {
     localStorage.removeItem("userInfo");
     localStorage.removeItem("shippingDetails");
     localStorage.removeItem("cartItems");
-    window.location.href = "/account/signin";
+    window.location.href = "/account/signin/?redirect=/";
   };
 
   return (
