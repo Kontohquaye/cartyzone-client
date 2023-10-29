@@ -60,7 +60,7 @@ const Orders = () => {
         } = await backendInstance.post(
           "/api/orders/user/all",
           { user: id },
-          { withCredentials: true }
+          { headers: { authorization: `Bearer ${userInfo.token}` } }
         );
         const updatedOrders = orders.map((item) => {
           const currentDate = new Date(Date.now());
@@ -102,7 +102,7 @@ const Orders = () => {
       const {
         data: { message },
       } = await backendInstance.delete(`/api/orders/order/get/${itemId}`, {
-        withCredentials: true,
+        headers: { authorization: `Bearer ${userInfo.token}` },
       });
       dispatch({ type: "DELETE_SUCCESS", payload: itemId });
       toast.success(message);

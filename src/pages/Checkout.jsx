@@ -2,6 +2,7 @@ import { useContext, useReducer, useState } from "react";
 import Coupon from "../components/Coupon";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 // countries import / error handling
 import { countries } from "../utils/helper";
@@ -176,7 +177,7 @@ const Checkout = () => {
           discount,
           date: date,
         },
-        { withCredentials: true }
+        { headers: { authorization: `Bearer ${userInfo.token}` } }
       );
       // console.log(res);
       if (res.error) {
@@ -205,6 +206,9 @@ const Checkout = () => {
   };
   return (
     <div className="checkout my-4">
+      <Helmet>
+        <title>Checkout</title>
+      </Helmet>
       {cartItems && cartItems.length > 0 ? (
         <div className="content ">
           <h1 className="text-3xl font-bold ">Checkout</h1>

@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef } from "react";
+import { useContext, useEffect, useReducer, useRef } from "react";
 import { useParams } from "react-router-dom";
 import ReactDOMServer from "react-dom/server";
 import { PiCalendarBlank } from "react-icons/pi";
@@ -13,6 +13,8 @@ import { toast } from "react-toastify";
 import backendInstance from "../utils/api";
 import LoadingPage from "../components/LoadingPage";
 import ErrorPage from "./ErrorPage";
+// ctx
+import { Store } from "../services/Store";
 
 // reducer
 const reducer = (state, action) => {
@@ -30,6 +32,9 @@ const reducer = (state, action) => {
 
 const OrderDetail = () => {
   const { id } = useParams();
+  const {
+    state: { userInfo },
+  } = useContext(Store);
   const [{ loading, error, order }, dispatch] = useReducer(reducer, {
     loading: false,
     error: "",
@@ -43,10 +48,10 @@ const OrderDetail = () => {
         const { data } = await backendInstance.get(
           `/api/orders/order/get/${id}`,
           {
-            withCredentials: true,
+            headers: { authorization: `Bearer ${userInfo.token}` },
           }
         );
-        console.log(data[0]);
+        // console.log(data[0]);
         dispatch({ type: "FETCH_SUCCESS", payload: data[0] });
       } catch (err) {
         const {

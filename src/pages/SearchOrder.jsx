@@ -45,7 +45,7 @@ const SearchOrder = () => {
           data: { order },
         } = await backendInstance.get(
           `/api/orders/order/search/details/get?q=${query}`,
-          { withCredentials: true }
+          { headers: { authorization: `Bearer ${userInfo.token}` } }
         );
         dispatch({ type: "FETCH_SUCCESS", payload: order });
         // console.log(order);
