@@ -1,6 +1,10 @@
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useContext } from "react";
+
+// ctx
+import { Store } from "../services/Store";
 
 // cookie
 import Cookies from "js-cookie";
@@ -12,7 +16,7 @@ import { useEffect } from "react";
 const RootLayout = () => {
   const {
     state: { userInfo },
-  } = useConte;
+  } = useContext(Store);
   useEffect(() => {
     const userCookie = Cookies.get("cartysign");
     //
