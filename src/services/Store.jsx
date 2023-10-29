@@ -61,6 +61,18 @@ const reducer = (state, action) => {
     case "SIGNUP":
       const userDetails = action.payload;
       return { ...state, userInfo: { ...userDetails } };
+    case "UPDATE_USER_INFO":
+      const username = action.payload;
+      return { ...state, userInfo: { ...state.userInfo, username: username } };
+    case "SIGNOUT":
+      return {
+        ...state,
+        userInfo: {},
+        cart: {
+          cartItems: [],
+          shippingDetails: {},
+        },
+      };
 
     case "ORDER_SUCCESS":
       const shippingDetails = action.payload;

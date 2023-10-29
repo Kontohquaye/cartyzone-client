@@ -196,12 +196,13 @@ const Checkout = () => {
         navigate("/");
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       const {
         response: { data },
       } = error;
-      console.log(data.error);
-      dispatch({ type: "ORDER_ERROR", payload: data.error });
+      // console.log(data.message);
+      dispatch({ type: "ORDER_ERROR", payload: data.message });
+      toast.error(data.message);
     }
   };
   return (

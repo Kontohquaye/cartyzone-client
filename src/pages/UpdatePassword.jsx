@@ -11,7 +11,7 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "UPDATE_INFO":
       return { loading: true, error: false };
-    case "UPDAT_SUCCESS":
+    case "UPDATE_SUCCESS":
       return { loading: false, error: false };
     case "UPDATE_ERROR":
       return { loading: false, error: true };
@@ -26,12 +26,15 @@ const UpdatePassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const {
     state: { userInfo },
+    ctxDispatch,
   } = useContext(Store);
 
   const [{ loading, error }, dispatch] = useReducer(reducer, {
     loading: false,
     error: false,
   });
+  const { id } = userInfo;
+  // console.log(id);
 
   // update
   const handleUpdate = async (e) => {
@@ -54,14 +57,16 @@ const UpdatePassword = () => {
               data: { message },
             } = await backendInstance.put(
               "/api/users/account/details/update",
-              { username, password, newPassword, email },
-              { withCredentials: true }
+              { username, password, newPassword, email, user: id },
+              {
+                headers: { authorization: `Bearer ${userInfo.token}` },
+              }
             );
             dispatch({ type: "UPDATE_SUCCESS" });
             // console.log(message);
-            userInfo.username = username;
+            // window.location.reload();
+            ctxDispatch({ type: "UPDATE_USER_INFO", payload: username });
             localStorage.setItem("userInfo", JSON.stringify(userInfo));
-            window.location.reload();
             toast.success(message);
           } catch (err) {
             dispatch({ type: "UPDATE_ERROR" });
@@ -72,7 +77,7 @@ const UpdatePassword = () => {
               },
             } = err;
             toast.error(message);
-            console.log(err);
+            // console.log(err);
           }
         } else {
           try {
@@ -82,11 +87,14 @@ const UpdatePassword = () => {
               data: { message },
             } = await backendInstance.put(
               "/api/users/account/details/update",
-              { password, newPassword, email },
-              { withCredentials: true }
+              { password, newPassword, email, user: id },
+              {
+                headers: { authorization: `Bearer ${userInfo.token}` },
+              }
             );
             dispatch({ type: "UPDATE_SUCCESS" });
 
+            // window.location.reload();
             // console.log(data);
             toast.success(message);
           } catch (err) {

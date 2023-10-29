@@ -7,7 +7,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Store } from "../services/Store";
 
 const Navbar = () => {
-  const { state } = useContext(Store);
+  const { state, ctxDispatch } = useContext(Store);
   const { userInfo } = state;
   const { username } = userInfo;
   const [showMenu, setShowMenu] = useState(false);
@@ -61,6 +61,15 @@ const Navbar = () => {
       setShowMenu(true);
     }
   });
+
+  // signOut
+  const handleSignOut = () => {
+    ctxDispatch({ type: "SIGNOUT" });
+    localStorage.removeItem("userInfo");
+    localStorage.removeItem("shippingDetails");
+    localStorage.removeItem("cartItems");
+    window.location.href = "/account/signin";
+  };
 
   return (
     <div className="navbar bg-primary-200 text-white sticky top-0 w-full z-30">
@@ -168,6 +177,7 @@ const Navbar = () => {
                     <li
                       onClick={() => {
                         setShowMenu(false);
+                        handleSignOut();
                       }}
                       className="px-2 py-1 hover:bg-secondary hover:cursor-pointer"
                     >
@@ -268,7 +278,10 @@ const Navbar = () => {
                       </li>
                     </Link>
                     {/* signout */}
-                    <li className="px-2 py-1 hover:bg-secondary hover:cursor-pointer">
+                    <li
+                      onClick={handleSignOut}
+                      className="px-2 py-1 hover:bg-secondary hover:cursor-pointer"
+                    >
                       signout
                     </li>
                   </ul>
