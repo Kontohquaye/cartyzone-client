@@ -63,7 +63,7 @@ const Navbar = () => {
   });
 
   return (
-    <div className="navbar bg-primary-200 text-white">
+    <div className="navbar bg-primary-200 text-white sticky top-0 w-full z-30">
       <nav className="max-w-[1200px] mx-auto pt-6 pb-1 px-2 flex justify-between items-center">
         {/* left- logo and category */}
         <div>

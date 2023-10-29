@@ -78,6 +78,9 @@ const Home = () => {
   // add to cart Handler
   const addToCartHandler = (product) => {
     const existItem = cartItems.find((item) => item._id === product._id);
+    if (!existItem) {
+      toast.success("new item added to cart");
+    }
 
     const quantity = existItem ? (existItem.quantity += 1) : 1;
     if (product.countInStock > quantity) {

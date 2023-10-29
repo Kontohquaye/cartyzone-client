@@ -30,6 +30,9 @@ const Products = ({ products }) => {
   const addToCartHandler = (product) => {
     const existItem = cartItems.find((item) => item._id === product._id);
     const quantity = existItem ? (existItem.quantity += 1) : 1;
+    if (!existItem) {
+      toast.success("new item added to cart");
+    }
 
     if (product.countInStock > quantity) {
       ctxDispatch({ type: "ADD_TO_CART", payload: { ...product, quantity } });

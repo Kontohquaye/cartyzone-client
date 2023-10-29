@@ -22,6 +22,7 @@ const Cart = () => {
     if (product.countInStock > quantity) {
       ctxDispatch({ type: "ADD_TO_CART", payload: { ...product, quantity } });
     }
+
     if (product.countInStock < quantity) {
       toast.error("stock is less than quantity needed");
       return;
@@ -32,7 +33,7 @@ const Cart = () => {
   // clear from cart handler
   const clearFromCartHandler = (productId) => {
     ctxDispatch({ type: "CLEAR_FROM_CART", payload: productId });
-    console.log(productId);
+    // console.log(productId);
   };
 
   // remove from cart handler
@@ -42,11 +43,13 @@ const Cart = () => {
     if (quantity <= 0) {
       ctxDispatch({ type: "CLEAR_FROM_CART", payload: product._id });
       toast.success("Item removed from cart");
+
       return;
     }
     if (quantity >= 1) {
       ctxDispatch({ type: "ADD_TO_CART", payload: { ...product, quantity } });
     }
+
     // console.log(cartItems);
   };
 

@@ -19,14 +19,18 @@ import CheckoutButton from "../components/CheckoutButton";
 const reducer = (state, action) => {
   switch (action.type) {
     case "PLACE_ORDER":
-      return { ...state, error: "", loading: true };
+      return { ...state, error: {}, loading: true };
     case "ORDER_SUCCESS":
-      return { ...state, error: "", loading: false };
+      return { ...state, error: {}, loading: false };
     case "ORDER_ERROR":
       const err = action.payload;
       return { ...state, error: err, loading: false };
-    // case "ADD_DISCOUNT":
-    //   return { ...state, discount: action.payload };
+    case "ADD_DISCOUNT":
+      return { ...state, discountLoading: true };
+    case "DISCOUNT_ADDED":
+      return { ...state, discountLoading: false };
+    case "DISCOUNT_ERROR":
+      return { ...state, discountLoading: false };
     default:
       return state;
   }
@@ -65,10 +69,11 @@ const Checkout = () => {
   const [postalCode, setPostalCode] = useState(
     shippingDetails ? shippingDetails.postalCode : ""
   );
-  const [{ loading, error }, dispatch] = useReducer(reducer, {
+  const [discount, setDiscount] = useState(0);
+  const [{ loading, error, discountLoading }, dispatch] = useReducer(reducer, {
     loading: false,
-    error: "",
-    // discount: 0,
+    error: {},
+    discountLoading: false,
   });
 
   // console.log(cartItems);
@@ -99,6 +104,44 @@ const Checkout = () => {
   const shippingPrice = cartItems.length > 4 ? 0 : cartItems.length + 1 * 2;
   const taxPrice = Math.ceil(cartItems.length + 1 * 0.2);
   const totalPrice = itemsPrice + shippingPrice + taxPrice;
+  // var discount = 0; //not react
+  const handleCoupon = async (e) => {
+    e.preventDefault();
+    if (coupon.length < 1) {
+      toast.info("please enter a coupon  or skip");
+    } else {
+      try {
+        dispatch({ type: "ADD_DISCOUNT" });
+        const {
+          data: { value },
+        } = await backendInstance.post("/api/coupons/coupon/use", {
+          name: coupon,
+        });
+
+        if (value) {
+          dispatch({ type: "DISCOUNT_ADDED" });
+          setDiscount(value);
+          toast.success(`$ ${value}.00 discount added`);
+          console.log(value, discount);
+        } else {
+          setDiscount(0);
+          dispatch({ type: "DISCOUNT_ERROR" });
+        }
+        //second fetch
+        // dispatch({ type: "ADD_DISCOUNT", payload: val });
+      } catch (err) {
+        const {
+          response: {
+            data: { message },
+          },
+        } = err;
+        toast.error(message);
+        setDiscount(0);
+        console.log(discount);
+        dispatch({ type: "DISCOUNT_ERROR" });
+      }
+    }
+  };
   const handleOrder = async (e) => {
     const orderItems = cartItems.map((item) => ({
       ...item,
@@ -119,24 +162,6 @@ const Checkout = () => {
     // coupon
 
     try {
-      var discount = 0;
-      if (coupon && coupon !== "") {
-        const {
-          data: { value },
-        } = await backendInstance.post("/api/coupons/coupon/use", {
-          name: coupon,
-        });
-
-        if (value) {
-          discount = value;
-          // console.log(value, discount);
-        } else {
-          discount = 0;
-        }
-        //second fetch
-        // dispatch({ type: "ADD_DISCOUNT", payload: val });
-      }
-
       dispatch({ type: "PLACE_ORDER" });
       const date = new Date(Date.now());
       const { data: res } = await backendInstance.post(
@@ -174,12 +199,8 @@ const Checkout = () => {
       const {
         response: { data },
       } = error;
-      dispatch({ type: "ORDER_ERROR", payload: data.message });
-      if ((data.message = "Invalid coupon")) {
-        toast.info("enter a valid coupon or leave blank");
-      } else {
-        toast.error(data.message);
-      }
+      console.log(data.error);
+      dispatch({ type: "ORDER_ERROR", payload: data.error });
     }
   };
   return (
@@ -190,6 +211,17 @@ const Checkout = () => {
           <div className="coupon w-full bg-primary-200 p-2 border-l-[6px] border-secondary text-white">
             <Coupon couponHandler={setCoupon} />
           </div>
+          <button
+            onClick={handleCoupon}
+            className="w-[97px] text-center whitespace-nowrap bg-primary-200 hover:opacity-80 text-white font-semibold px-1 py-2 mt-1 rounded-md"
+          >
+            {discountLoading ? (
+              <span className="loader h-[20px] w-[20px]"></span>
+            ) : (
+              "use coupon"
+            )}
+          </button>
+
           {/* info section */}
           <div className="grid">
             <CheckoutInfo data={data} />

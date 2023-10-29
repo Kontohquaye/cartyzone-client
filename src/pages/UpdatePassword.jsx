@@ -52,7 +52,7 @@ const UpdatePassword = () => {
             dispatch({ type: "UPDATE_INFO" });
             const {
               data: { message },
-            } = await backendInstance.post(
+            } = await backendInstance.put(
               "/api/users/account/details/update",
               { username, password, newPassword, email },
               { withCredentials: true }
@@ -80,7 +80,7 @@ const UpdatePassword = () => {
 
             const {
               data: { message },
-            } = await backendInstance.post(
+            } = await backendInstance.put(
               "/api/users/account/details/update",
               { password, newPassword, email },
               { withCredentials: true }
