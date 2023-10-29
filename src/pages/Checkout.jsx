@@ -120,7 +120,7 @@ const Checkout = () => {
 
     try {
       var discount = 0;
-      if (coupon !== "") {
+      if (coupon && coupon !== "") {
         const {
           data: { value },
         } = await backendInstance.post("/api/coupons/coupon/use", {

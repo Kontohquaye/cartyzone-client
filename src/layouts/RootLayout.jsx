@@ -32,14 +32,16 @@ const RootLayout = () => {
       // console.log("Expiration Date:", expirationDate);
       if (expirationDate <= new Date()) {
         // console.log("The cookie has expired.");
-        userInfo = {};
+        userInfo.username = "";
+        userInfo.isAdmin = "";
+        userInfo.id = "";
         localStorage.clear();
       } else {
         // console.log("The cookie is still valid.");
       }
     }
 
-    console.log(userCookie);
+    // console.log(userCookie);
   }, []);
 
   return (
