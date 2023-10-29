@@ -174,7 +174,7 @@ const Checkout = () => {
       const {
         response: { data },
       } = error;
-
+      dispatch({ type: "ORDER_ERROR", payload: data.message });
       if ((data.message = "Invalid coupon")) {
         toast.info("enter a valid coupon or leave blank");
       } else {

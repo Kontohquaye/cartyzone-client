@@ -1,18 +1,18 @@
 import { useEffect, useReducer, useRef } from "react";
-import { useParams } from "react-router-dom";
-import ReactDOMServer from "react-dom/server";
+import { useLocation } from "react-router-dom";
 import { PiCalendarBlank } from "react-icons/pi";
 import { BsPrinter } from "react-icons/bs";
 import { BiSolidUser } from "react-icons/bi";
 import { MdLocalShipping } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { format, parseISO } from "date-fns";
-import { toast } from "react-toastify";
-
-// api
 import backendInstance from "../utils/api";
+import { toast } from "react-toastify";
+import NoData from "./NoData";
 import LoadingPage from "../components/LoadingPage";
 import ErrorPage from "./ErrorPage";
+
+import ReactDOMServer from "react-dom/server";
 
 // reducer
 const reducer = (state, action) => {
@@ -28,26 +28,27 @@ const reducer = (state, action) => {
   }
 };
 
-const OrderDetail = () => {
-  const { id } = useParams();
+const SearchOrder = () => {
+  const printPageRef = useRef();
+  const { search } = useLocation();
+  const query = new URLSearchParams(search).get("q");
   const [{ loading, error, order }, dispatch] = useReducer(reducer, {
     loading: false,
     error: "",
     order: {},
   });
-  const printPageRef = useRef();
   useEffect(() => {
     const fetchOrder = async () => {
       dispatch({ type: "FETCH_ORDER" });
       try {
-        const { data } = await backendInstance.get(
-          `/api/orders/order/get/${id}`,
-          {
-            withCredentials: true,
-          }
+        const {
+          data: { order },
+        } = await backendInstance.get(
+          `/api/orders/order/search/details/get?q=${query}`,
+          { withCredentials: true }
         );
-        console.log(data[0]);
-        dispatch({ type: "FETCH_SUCCESS", payload: data[0] });
+        dispatch({ type: "FETCH_SUCCESS", payload: order });
+        // console.log(order);
       } catch (err) {
         const {
           response: {
@@ -59,8 +60,9 @@ const OrderDetail = () => {
       }
     };
     fetchOrder();
-  }, [id]);
+  }, [query]);
 
+  //   print order
   const handlePrint = () => {
     // console.log("Print");
 
@@ -82,7 +84,7 @@ const OrderDetail = () => {
           </div>
         </div>
         <p className="font-medium mt-2 text-[#999] border-b-[1px] border-img p-2 mb-2">
-          Order ID: # {id}
+          Order ID: # {query}
         </p>
 
         <div className="order-details mt-2">
@@ -236,6 +238,7 @@ const OrderDetail = () => {
       <head>
         <title>Order details</title>
       </head>
+          <link rel="stylesheet" href="../index.css">
       <body>
         ${printContent}
       </body>
@@ -245,13 +248,14 @@ const OrderDetail = () => {
     printWindow.print();
   };
   return (
-    <div className="payment">
+    <div className="search-page">
       {loading && <LoadingPage />}
+      {!loading && !error && !order.shippingDetails && <NoData />}
       {error && <ErrorPage />}
-      {!loading && !error && order && order.shippingDetails && (
+      {!error && !loading && order.shippingDetails && (
         <div className="content" ref={printPageRef}>
           <h1 className="font-semibold text-2xl mt-4 text-center">
-            Order Details
+            Search Details
           </h1>
           <div className="flex justify-between items-center">
             <div className="left flex items-center">
@@ -265,7 +269,7 @@ const OrderDetail = () => {
             </div>
           </div>
           <p className="font-medium mt-2 text-[#999] border-b-[1px] border-img p-2 mb-2">
-            Order ID: # {id}
+            Order ID: # {query}
           </p>
 
           <div className="order-details mt-2">
@@ -432,7 +436,7 @@ const OrderDetail = () => {
                 {order.discount !== 0 && (
                   <li className="flex justify-around items-center">
                     <p className="basis-1/2">discount</p>
-                    <p className="basis-1/2 font-poppins">
+                    <p className="basis-1/2 font-poppins text-blue-500">
                       $ {order.discount.toFixed(2)}
                     </p>
                   </li>
@@ -473,4 +477,4 @@ const OrderDetail = () => {
   );
 };
 
-export default OrderDetail;
+export default SearchOrder;

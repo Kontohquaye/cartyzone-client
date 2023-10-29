@@ -135,44 +135,76 @@ const Navbar = () => {
                   </span>
                 </div>
                 {/* menu list */}
-                <ul
-                  ref={listRef}
-                  className={
-                    showMinMenu
-                      ? "account-menu sub-menu"
-                      : "account-menu sub-menu hidden"
-                  }
-                >
-                  <Link to="/account/profile">
-                    <li
-                      onClick={() => {
-                        setShowMenu(false);
-                      }}
-                      className="px-2 py-1 hover:bg-secondary hover:cursor-pointer"
-                    >
-                      profile
-                    </li>
-                  </Link>
-                  <Link to="/account/orders">
-                    <li
-                      onClick={() => {
-                        setShowMenu(false);
-                      }}
-                      className="px-2 py-1 hover:bg-secondary hover:cursor-pointer"
-                    >
-                      order history
-                    </li>
-                  </Link>
-                  {/* signout */}
-                  <li
-                    onClick={() => {
-                      setShowMenu(false);
-                    }}
-                    className="px-2 py-1 hover:bg-secondary hover:cursor-pointer"
+                {userInfo && userInfo.username ? (
+                  <ul
+                    ref={listRef}
+                    className={
+                      showMinMenu
+                        ? "account-menu sub-menu"
+                        : "account-menu sub-menu hidden"
+                    }
                   >
-                    signout
-                  </li>
-                </ul>
+                    <Link to="/account/profile">
+                      <li
+                        onClick={() => {
+                          setShowMenu(false);
+                        }}
+                        className="px-2 py-1 hover:bg-secondary hover:cursor-pointer"
+                      >
+                        profile
+                      </li>
+                    </Link>
+                    <Link to="/account/orders">
+                      <li
+                        onClick={() => {
+                          setShowMenu(false);
+                        }}
+                        className="px-2 py-1 hover:bg-secondary hover:cursor-pointer"
+                      >
+                        order history
+                      </li>
+                    </Link>
+                    {/* signout */}
+                    <li
+                      onClick={() => {
+                        setShowMenu(false);
+                      }}
+                      className="px-2 py-1 hover:bg-secondary hover:cursor-pointer"
+                    >
+                      signout
+                    </li>
+                  </ul>
+                ) : (
+                  <ul
+                    ref={listRef}
+                    className={
+                      showMinMenu
+                        ? "account-menu sub-menu"
+                        : "account-menu sub-menu hidden"
+                    }
+                  >
+                    <Link to="/account/signin">
+                      <li
+                        onClick={() => {
+                          setShowMenu(false);
+                        }}
+                        className="px-2 py-1 hover:bg-secondary hover:cursor-pointer"
+                      >
+                        signin
+                      </li>
+                    </Link>
+                    <Link to="/account/signup">
+                      <li
+                        onClick={() => {
+                          setShowMenu(false);
+                        }}
+                        className="px-2 py-1 hover:bg-secondary hover:cursor-pointer"
+                      >
+                        signup
+                      </li>
+                    </Link>
+                  </ul>
+                )}
               </div>
             </div>
           ) : (
@@ -223,7 +255,7 @@ const Navbar = () => {
                   </span>
                 </div>
                 {/* list */}
-                {showAccountMenu && (
+                {showAccountMenu && userInfo && userInfo.username ? (
                   <ul className="capitalize font-medium absolute -right-2 top-[150%] bg-primary-200 w-[150px]">
                     <Link to="/account/profile">
                       <li className="px-2 py-1 hover:bg-secondary hover:cursor-pointer">
@@ -240,6 +272,21 @@ const Navbar = () => {
                       signout
                     </li>
                   </ul>
+                ) : (
+                  showAccountMenu && (
+                    <ul className="capitalize font-medium absolute -right-2 top-[150%] bg-primary-200 w-[150px]">
+                      <Link to="/account/signin">
+                        <li className="px-2 py-1 hover:bg-secondary hover:cursor-pointer">
+                          signin
+                        </li>
+                      </Link>
+                      <Link to="/account/signup">
+                        <li className="px-2 py-1 hover:bg-secondary hover:cursor-pointer">
+                          signup
+                        </li>
+                      </Link>
+                    </ul>
+                  )
                 )}
               </div>
             </div>

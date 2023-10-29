@@ -126,7 +126,7 @@ const Orders = () => {
       {!loading && !deleting && !error && orders && orders.length > 0 && (
         <div className="content mt-8 ">
           <h2 className="font-medium">Recent Orders</h2>
-          <div className="table w-full min-w-[860px] overflow-x-auto h-[250px]">
+          <div className="table w-full min-w-[860px] overflow-x-auto pb-2">
             <div className="head grid grid-cols-7 mb-2 border-b-[1px] border-img font-light">
               <div className="order-id py-2 ">Order id</div>
               <div className="order-date py-2 ">Order date</div>
@@ -150,7 +150,7 @@ const Orders = () => {
                       </span>
                     ) : (
                       <span className="max-w-full font-light inline-block text-ellipsis whitespace-nowrap">
-                        order.formatedDate
+                        {order.formatedDate}
                       </span>
                     )}
                   </div>

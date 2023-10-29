@@ -7,6 +7,8 @@ import { Store } from "../services/Store";
 
 // api
 import backendInstance from "../utils/api";
+
+// toast
 import { toast } from "react-toastify";
 
 const reducer = (state, action) => {
@@ -14,13 +16,13 @@ const reducer = (state, action) => {
     case "SIGNIN_FETCH":
       return { ...state, loading: true };
     case "FETCH_SUCCESS":
-      return { loading: false, error: "" };
+      return { loading: false, error: {} };
     case "FETCH_FAILED":
       // console.log(action.payload);
       return { loading: false, error: { ...action.payload } };
     case "RESET":
       // console.log(action.payload);
-      return { loading: false, error: "" };
+      return { loading: false, error: {} };
     default:
       return { state };
   }
@@ -39,7 +41,7 @@ const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [{ loading, error }, dispatch] = useReducer(reducer, {
     loading: false,
-    error: "",
+    error: {},
   });
 
   // user singned in
@@ -79,7 +81,15 @@ const SignIn = () => {
         },
       } = err;
       // console.log(error);
-      dispatch({ type: "FETCH_FAILED", payload: error });
+      if (err.response.data.error) {
+        dispatch({ type: "FETCH_FAILED", payload: error });
+        if (error.password) {
+          toast.error(error.password);
+        } else {
+          toast.error(error.email);
+        }
+      }
+      dispatch({ type: "FETCH_FAILED", payload: err });
     }
   };
   return (
@@ -164,7 +174,7 @@ const SignIn = () => {
             }}
             className="bg-primary-200 text-white font-semibold p-2 hover:opacity-70"
           >
-            {loading ? "Signing in" : "Sign In"}
+            {loading && !error.password ? "Signing in" : "Sign In"}
           </button>
           <div className="info font-light text-center">
             Don't have an account?
