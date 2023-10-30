@@ -433,7 +433,7 @@ const SearchOrder = () => {
                 Order Summary
               </h2>
               <ul className=" sm:w-1/2 lg:w-1/3 mx-auto max-w-full">
-                <li className="flex justify-between items-center font-medium font-medium">
+                <li className="flex justify-between items-center font-medium ">
                   <p className="basis-1/2">Subtotal</p>
                   <p className="basis-1/2 font-poppins  flex justify-end">
                     $ {(order.totalPrice + order.discount).toFixed(2)}
