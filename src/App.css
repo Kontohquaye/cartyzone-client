@@ -90,6 +90,10 @@
     flex-basis: 40%;
   }
 
+  .summary ul {
+    width: 50%;
+  }
+
   .sign-in form {
     width: 300px;
   }

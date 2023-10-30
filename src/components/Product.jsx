@@ -57,6 +57,7 @@ const Products = ({ products }) => {
           <div className="image bg-img h-64 object-cover mb-2">
             <Link to={`/products/${product._id}`}>
               <img
+                loading="lazy"
                 src={product.image}
                 alt={product.slug}
                 className="h-full w-full object-cover "

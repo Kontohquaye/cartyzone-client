@@ -1,7 +1,7 @@
-import { Outlet } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { Outlet, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 // ctx
 import { Store } from "../services/Store";
 
@@ -13,49 +13,36 @@ import Footer from "../components/Footer";
 // import { useEffect } from "react";
 
 const RootLayout = () => {
+  //
+  const navigate = useNavigate();
   const {
     state: { userInfo },
+    ctxDispatch,
   } = useContext(Store);
-  // useEffect(() => {
-  //   // jwt.verify(token, "cartyzonewebsite", (error, decode) => {
-  //   //   if (error) {
-  //   //     userInfo.username = "";
-  //   //     userInfo.id = "";
-  //   //     userInfo.isAdmin = "";
-  //   //     userInfo.token = "";
-  //   //     localStorage.clear();
-  //   //   } else {
-  //   //     console.log(decode);
-  //   //   }
-  //   // });
-  //   ///else
-  //   const userCookie = Cookies.get("cartysign");
-  //   //
-  //   if (userCookie) {
-  //     const maxAge = 3 * 24 * 60 * 60 * 1000;
+  useEffect(() => {
+    if (document.cookie) {
+      const cookies = document.cookie.split(";");
+      const decodedCookies =
+        cookies && cookies.map((cookie) => decodeURIComponent(cookie));
+      // console.log(decodedCookies);
+      if (decodedCookies) {
+        const decodedUserCookies = decodedCookies.filter((cookie) =>
+          cookie.includes("cartysign")
+        );
+        // console.log(decodedUserCookies);
+        const cookieValue = decodedUserCookies[0].split("exp");
+        const cookieExp = Number(cookieValue[1]);
+        const currentDate = new Date(Date.now());
 
-  //     // Get the current time in milliseconds
-  //     const currentTime = new Date().getTime();
-  //     console.log(currentTime);
-  //     console.log(maxAge + currentTime);
-
-  //     // Calculate the expiration date by adding 'maxAgeInMilliseconds' to the current time
-  //     const expirationDate = new Date(currentTime + maxAge);
-
-  //     // console.log("Expiration Date:", expirationDate);
-  //     if (expirationDate <= new Date()) {
-  //       // console.log("The cookie has expired.");
-  //       userInfo.username = "";
-  //       userInfo.isAdmin = "";
-  //       userInfo.id = "";
-  //       localStorage.clear();
-  //     } else {
-  //       // console.log("The cookie is still valid.");
-  //     }
-  //   }
-
-  //   // console.log(userCookie);
-  // }, []);
+        if (currentDate.getTime() > cookieExp) {
+          toast.info("log in section expired");
+          ctxDispatch({ type: "LOGIN_EXPIRED" });
+          localStorage.removeItem("userInfo");
+          navigate("/");
+        }
+      }
+    }
+  }, [userInfo]);
 
   return (
     <div className="root-layout font-raleway h-[100vh]">

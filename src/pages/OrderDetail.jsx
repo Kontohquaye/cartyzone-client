@@ -1,5 +1,5 @@
 import { useContext, useEffect, useReducer, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ReactDOMServer from "react-dom/server";
 import { PiCalendarBlank } from "react-icons/pi";
 import { BsPrinter } from "react-icons/bs";
@@ -8,6 +8,7 @@ import { MdLocalShipping } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { format, parseISO } from "date-fns";
 import { toast } from "react-toastify";
+import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 
 // api
 import backendInstance from "../utils/api";
@@ -15,6 +16,7 @@ import LoadingPage from "../components/LoadingPage";
 import ErrorPage from "./ErrorPage";
 // ctx
 import { Store } from "../services/Store";
+import PayPalButton from "../components/PaypalButton";
 
 // reducer
 const reducer = (state, action) => {
@@ -25,22 +27,26 @@ const reducer = (state, action) => {
       return { loading: false, error: "", order: action.payload };
     case "FETCH_ERROR":
       return { loading: false, error: action.payload, order: {} };
+
     default:
       return state;
   }
 };
 
 const OrderDetail = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const {
     state: { userInfo },
   } = useContext(Store);
-  const [{ loading, error, order }, dispatch] = useReducer(reducer, {
-    loading: false,
-    error: "",
-    order: {},
-  });
+  const [{ loading, error, order, loadingPay, successPay }, dispatch] =
+    useReducer(reducer, {
+      loading: false,
+      error: "",
+      order: {},
+    });
   const printPageRef = useRef();
+
   useEffect(() => {
     const fetchOrder = async () => {
       dispatch({ type: "FETCH_ORDER" });
@@ -54,6 +60,7 @@ const OrderDetail = () => {
         // console.log(data[0]);
         dispatch({ type: "FETCH_SUCCESS", payload: data[0] });
       } catch (err) {
+        // console.log(err);
         const {
           response: {
             data: { error },
@@ -64,6 +71,8 @@ const OrderDetail = () => {
       }
     };
     fetchOrder();
+
+    // paypal
   }, [id]);
 
   const handlePrint = () => {
@@ -427,48 +436,56 @@ const OrderDetail = () => {
               <h2 className="font-semibold text-center mb-3 border-y-[1px] border-[#ccc]">
                 Order Summary
               </h2>
-              <ul className="sm:w-1/2 mx-auto max-w-full">
-                <li className="flex justify-around items-center font-medium">
+              <ul className="sm:w-1/2 lg:w-1/3 mx-auto max-w-full ">
+                <li className="flex justify-between items-center font-medium">
                   <p className="basis-1/2">Subtotal</p>
-                  <p className="basis-1/2 font-poppins ">
+                  <p className="basis-1/2 font-poppins flex justify-end ">
                     $ {(order.totalPrice + order.discount).toFixed(2)}
                   </p>
                 </li>
                 {order.discount !== 0 && (
-                  <li className="flex justify-around items-center">
+                  <li className="flex justify-between items-center">
                     <p className="basis-1/2">discount</p>
-                    <p className="basis-1/2 font-poppins">
+                    <p className="basis-1/2 font-poppins flex justify-end ">
                       $ {order.discount.toFixed(2)}
                     </p>
                   </li>
                 )}
-                <li className="flex justify-around items-center">
-                  <span className="basis-1/2">shipping price</span>
-                  <span className="basis-1/2 font-poppins">
+                <li className="flex justify-between items-center">
+                  <span className="basis-1/2">shipping </span>
+                  <span className="basis-1/2 font-poppins flex justify-end">
                     $ {order.shippingPrice.toFixed(2)}
                   </span>
                 </li>
-                <li className="flex justify-around items-center">
+                <li className="flex justify-between items-center">
                   <span className="basis-1/2">tax price</span>
-                  <span className="basis-1/2 font-poppins">
+                  <span className="basis-1/2 font-poppins flex justify-end">
                     $ {order.taxPrice.toFixed(2)}
                   </span>
                 </li>
-                <li className="flex justify-around items-center font-bold">
+                <li className="flex justify-between items-center font-bold">
                   <span className="basis-1/2">Total</span>
                   {order.discount !== 0 ? (
-                    <div className="basis-1/2 font-poppins ">
+                    <div className="basis-1/2 font-poppins flex whitespace-nowrap justify-end ">
                       <span className="line-through text-secondary">
-                        $ {(order.totalPrice + order.discount).toFixed(2)}
+                        ${(order.totalPrice + order.discount).toFixed(2)}{" "}
                       </span>
-                      <span> $ {order.totalPrice.toFixed(2)}</span>
+                      <span className="pl-[1px]">
+                        {" "}
+                        ${order.totalPrice.toFixed(2)}
+                      </span>
                     </div>
                   ) : (
-                    <span className="basis-1/2 font-poppins">
-                      {order.totalPrice.toFixed(2)}
+                    <span className="basis-1/2 font-poppins flex justify-end">
+                      $ {order.totalPrice.toFixed(2)}
                     </span>
                   )}
                 </li>
+                {!loading && !error && order && !order.isPaid && (
+                  <div className="paypal-buttons ">
+                    <PayPalButton order={order} orderId={id} />
+                  </div>
+                )}
               </ul>
             </div>
           </div>

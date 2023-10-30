@@ -123,6 +123,7 @@ const Home = () => {
                     className="h-full w-full object-contain "
                     src={product.image}
                     alt={product.slug + "img"}
+                    loading="lazy"
                   />
                 </Link>
               </div>

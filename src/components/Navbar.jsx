@@ -3,13 +3,14 @@ import { TiShoppingCart } from "react-icons/ti";
 import { MdAccountCircle } from "react-icons/md";
 import { BiCategoryAlt } from "react-icons/bi";
 import { HiOutlineMenu } from "react-icons/hi";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Store } from "../services/Store";
 
 const Navbar = () => {
   const { state, ctxDispatch } = useContext(Store);
   const { userInfo } = state;
   const { username } = userInfo;
+  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   // large screens
   const [showAccountMenu, setShowAccountMenu] = useState(false);
@@ -68,7 +69,7 @@ const Navbar = () => {
     localStorage.removeItem("userInfo");
     localStorage.removeItem("shippingDetails");
     localStorage.removeItem("cartItems");
-    window.location.href = "/account/signin/?redirect=/";
+    navigate("/account/signin/?redirect=/");
   };
 
   return (

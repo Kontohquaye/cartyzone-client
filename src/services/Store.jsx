@@ -73,6 +73,8 @@ const reducer = (state, action) => {
           shippingDetails: {},
         },
       };
+    case "LOGIN_EXPIRED":
+      return { ...state, userInfo: {} };
 
     case "ORDER_SUCCESS":
       const shippingDetails = action.payload;

@@ -195,14 +195,16 @@ const Checkout = () => {
         );
         navigate("/");
       }
-    } catch (error) {
-      // console.log(error);
+    } catch (err) {
+      // console.log(err);
       const {
-        response: { data },
-      } = error;
-      // console.log(data.message);
-      dispatch({ type: "ORDER_ERROR", payload: data.message });
-      toast.error(data.message);
+        response: {
+          data: { error },
+        },
+      } = err;
+      // console.log(error);
+      dispatch({ type: "ORDER_ERROR", payload: error });
+      toast.error("error occurred");
     }
   };
   return (

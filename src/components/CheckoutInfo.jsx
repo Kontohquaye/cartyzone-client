@@ -98,7 +98,8 @@ const CheckoutInfo = ({ data }) => {
                     type="text"
                     name="email"
                     id="email"
-                    value={email + "is not a valid email"}
+                    value={email}
+                    placeholder="email is not a valid email"
                     onChange={(e) => {
                       setEmail(e.target.value);
                     }}
