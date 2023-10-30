@@ -3,7 +3,7 @@ import { TiShoppingCart } from "react-icons/ti";
 import { MdAccountCircle } from "react-icons/md";
 import { BiCategoryAlt } from "react-icons/bi";
 import { HiOutlineMenu } from "react-icons/hi";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { Store } from "../services/Store";
 
 const Navbar = () => {
@@ -78,12 +78,12 @@ const Navbar = () => {
         {/* left- logo and category */}
         <div>
           {/* logo */}
-          <Link to="/">
+          <NavLink to="/">
             <h1 className="text-2xl italic cursor-pointer">
               C<span className="text-secondary">ar</span>tyzon
               <span className="text-secondary">e</span>
             </h1>
-          </Link>
+          </NavLink>
         </div>
 
         {/* right */}
@@ -111,7 +111,7 @@ const Navbar = () => {
               </div>
 
               {/* cart */}
-              <Link to="/cart ">
+              <NavLink to="/cart ">
                 <div className="cart relative py-1 sm:p-0 flex items-center cursor-pointer sm:hover:text-accent hover:bg-secondary p-2 sm:hover:bg-transparent">
                   <TiShoppingCart className="text-2xl cursor-pointer sm:hover:text-accent mr-1" />
                   {state.cart.cartItems && state.cart.cartItems.length > 0 && (
@@ -123,7 +123,7 @@ const Navbar = () => {
                   )}
                   <span className=" font-semibold  cursor-pointer">Cart</span>
                 </div>
-              </Link>
+              </NavLink>
               {/* account section */}
               <div
                 className="relative cursor-pointer sm:hover:text-accent "
@@ -154,7 +154,7 @@ const Navbar = () => {
                         : "account-menu sub-menu hidden"
                     }
                   >
-                    <Link to="/account/profile">
+                    <NavLink to="/account/profile">
                       <li
                         onClick={() => {
                           setShowMenu(false);
@@ -163,8 +163,8 @@ const Navbar = () => {
                       >
                         profile
                       </li>
-                    </Link>
-                    <Link to="/account/orders">
+                    </NavLink>
+                    <NavLink to="/account/orders">
                       <li
                         onClick={() => {
                           setShowMenu(false);
@@ -173,7 +173,7 @@ const Navbar = () => {
                       >
                         order history
                       </li>
-                    </Link>
+                    </NavLink>
                     {/* signout */}
                     <li
                       onClick={() => {
@@ -194,7 +194,7 @@ const Navbar = () => {
                         : "account-menu sub-menu hidden"
                     }
                   >
-                    <Link to="/account/signin">
+                    <NavLink to="/account/signin">
                       <li
                         onClick={() => {
                           setShowMenu(false);
@@ -203,8 +203,8 @@ const Navbar = () => {
                       >
                         signin
                       </li>
-                    </Link>
-                    <Link to="/account/signup">
+                    </NavLink>
+                    <NavLink to="/account/signup">
                       <li
                         onClick={() => {
                           setShowMenu(false);
@@ -213,7 +213,7 @@ const Navbar = () => {
                       >
                         signup
                       </li>
-                    </Link>
+                    </NavLink>
                   </ul>
                 )}
               </div>
@@ -227,7 +227,7 @@ const Navbar = () => {
               </div>
 
               {/* cart */}
-              <Link to="/cart ">
+              <NavLink to="/cart ">
                 <div className="cart relative  flex cursor-pointer hover:text-accent  p-2 ">
                   <TiShoppingCart className="text-2xl cursor-pointer hover:text-accent" />
                   {state.cart.cartItems && state.cart.cartItems.length > 0 && (
@@ -250,7 +250,7 @@ const Navbar = () => {
                     Cart
                   </span>
                 </div>
-              </Link>
+              </NavLink>
               {/* account section */}
               <div className="account-section relative">
                 <div
@@ -268,16 +268,16 @@ const Navbar = () => {
                 {/* list */}
                 {showAccountMenu && userInfo && userInfo.username ? (
                   <ul className="capitalize font-medium absolute -right-2 top-[150%] bg-primary-200 w-[150px]">
-                    <Link to="/account/profile">
+                    <NavLink to="/account/profile">
                       <li className="px-2 py-1 hover:bg-secondary hover:cursor-pointer">
                         profile
                       </li>
-                    </Link>
-                    <Link to="/account/orders">
+                    </NavLink>
+                    <NavLink to="/account/orders">
                       <li className="px-2 py-1 hover:bg-secondary hover:cursor-pointer">
                         order history
                       </li>
-                    </Link>
+                    </NavLink>
                     {/* signout */}
                     <li
                       onClick={handleSignOut}
@@ -289,16 +289,16 @@ const Navbar = () => {
                 ) : (
                   showAccountMenu && (
                     <ul className="capitalize font-medium absolute -right-2 top-[150%] bg-primary-200 w-[150px]">
-                      <Link to="/account/signin">
+                      <NavLink to="/account/signin">
                         <li className="px-2 py-1 hover:bg-secondary hover:cursor-pointer">
                           signin
                         </li>
-                      </Link>
-                      <Link to="/account/signup">
+                      </NavLink>
+                      <NavLink to="/account/signup">
                         <li className="px-2 py-1 hover:bg-secondary hover:cursor-pointer">
                           signup
                         </li>
-                      </Link>
+                      </NavLink>
                     </ul>
                   )
                 )}
