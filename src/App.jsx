@@ -43,7 +43,7 @@ const router = createBrowserRouter(
         <Route path="signin" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
         {/* profile */}
-        <Route path="profile/" element={<ProfileLayout />}>
+        <Route path="profile" element={<ProfileLayout />}>
           <Route index element={<UpdatePassword />} />
         </Route>
         <Route
@@ -56,7 +56,7 @@ const router = createBrowserRouter(
         </Route>
       </Route>
       {/* order details */}
-      <Route path="/orders/order/:id" element={<OrderDetail />} />
+      <Route path="orders/order/:id" element={<OrderDetail />} />
       <Route path="*" exact={true} element={<ErrorPage />} />
     </Route>
   )
