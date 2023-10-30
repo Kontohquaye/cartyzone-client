@@ -57,7 +57,7 @@ const router = createBrowserRouter(
       </Route>
       {/* order details */}
       <Route path="/orders/order/:id" element={<OrderDetail />} />
-      <Route path="*" element={<ErrorPage />} />
+      <Route path="*" exact={true} element={<ErrorPage />} />
     </Route>
   )
 );
