@@ -119,7 +119,7 @@ const Orders = () => {
 
   return (
     <div className="orders">
-      {orders.length < 1 && <EmptyCart />}
+      {orders.length < 1 && !loading && <EmptyCart />}
       {loading && <LoadingPage />}
       {deleting && <LoadingPage />}
       {error && <ErrorPage />}
