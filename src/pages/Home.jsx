@@ -118,7 +118,7 @@ const Home = () => {
             >
               {/* image section */}
               <div className="image basis-1/2 bg-img h-full  overflow-hidden up">
-                <Link to={`/products/${product._id}`}>
+                <Link to={`products/${product._id}`}>
                   <img
                     className="h-full w-full object-contain "
                     src={product.image}
@@ -131,7 +131,7 @@ const Home = () => {
               <div className="details basis-1/2 h-full pl-2 flex flex-col justify-between">
                 {/* title and rating */}
                 <div>
-                  <Link to={`/products/${product._id}`}>
+                  <Link to={`products/${product._id}`}>
                     <p className="font-semibold hover:text-blue-500 hover:underline">
                       {product.name}
                     </p>

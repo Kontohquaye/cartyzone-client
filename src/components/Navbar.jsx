@@ -111,7 +111,7 @@ const Navbar = () => {
               </div>
 
               {/* cart */}
-              <NavLink to="/cart ">
+              <NavLink to="cart ">
                 <div className="cart relative py-1 sm:p-0 flex items-center cursor-pointer sm:hover:text-accent hover:bg-secondary p-2 sm:hover:bg-transparent">
                   <TiShoppingCart className="text-2xl cursor-pointer sm:hover:text-accent mr-1" />
                   {state.cart.cartItems && state.cart.cartItems.length > 0 && (
@@ -154,7 +154,7 @@ const Navbar = () => {
                         : "account-menu sub-menu hidden"
                     }
                   >
-                    <NavLink to="/account/profile">
+                    <NavLink to="account/profile">
                       <li
                         onClick={() => {
                           setShowMenu(false);
@@ -164,7 +164,7 @@ const Navbar = () => {
                         profile
                       </li>
                     </NavLink>
-                    <NavLink to="/account/orders">
+                    <NavLink to="account/orders">
                       <li
                         onClick={() => {
                           setShowMenu(false);
@@ -194,7 +194,7 @@ const Navbar = () => {
                         : "account-menu sub-menu hidden"
                     }
                   >
-                    <NavLink to="/account/signin">
+                    <NavLink to="account/signin">
                       <li
                         onClick={() => {
                           setShowMenu(false);
@@ -204,7 +204,7 @@ const Navbar = () => {
                         signin
                       </li>
                     </NavLink>
-                    <NavLink to="/account/signup">
+                    <NavLink to="account/signup">
                       <li
                         onClick={() => {
                           setShowMenu(false);
@@ -227,7 +227,7 @@ const Navbar = () => {
               </div>
 
               {/* cart */}
-              <NavLink to="/cart ">
+              <NavLink to="cart ">
                 <div className="cart relative  flex cursor-pointer hover:text-accent  p-2 ">
                   <TiShoppingCart className="text-2xl cursor-pointer hover:text-accent" />
                   {state.cart.cartItems && state.cart.cartItems.length > 0 && (
@@ -268,12 +268,12 @@ const Navbar = () => {
                 {/* list */}
                 {showAccountMenu && userInfo && userInfo.username ? (
                   <ul className="capitalize font-medium absolute -right-2 top-[150%] bg-primary-200 w-[150px]">
-                    <NavLink to="/account/profile">
+                    <NavLink to="account/profile">
                       <li className="px-2 py-1 hover:bg-secondary hover:cursor-pointer">
                         profile
                       </li>
                     </NavLink>
-                    <NavLink to="/account/orders">
+                    <NavLink to="account/orders">
                       <li className="px-2 py-1 hover:bg-secondary hover:cursor-pointer">
                         order history
                       </li>
@@ -289,12 +289,12 @@ const Navbar = () => {
                 ) : (
                   showAccountMenu && (
                     <ul className="capitalize font-medium absolute -right-2 top-[150%] bg-primary-200 w-[150px]">
-                      <NavLink to="/account/signin">
+                      <NavLink to="account/signin">
                         <li className="px-2 py-1 hover:bg-secondary hover:cursor-pointer">
                           signin
                         </li>
                       </NavLink>
-                      <NavLink to="/account/signup">
+                      <NavLink to="account/signup">
                         <li className="px-2 py-1 hover:bg-secondary hover:cursor-pointer">
                           signup
                         </li>
