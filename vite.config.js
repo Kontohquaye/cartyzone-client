@@ -7,5 +7,4 @@ export default defineConfig({
     outDir: "build", // Specify the output directory
   },
   plugins: [react()],
-  base: "/cartyzone-client/",
 });
