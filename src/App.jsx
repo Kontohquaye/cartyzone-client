@@ -29,7 +29,11 @@ import UpdatePassword from "./pages/UpdatePassword";
 // router
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<RootLayout />} errorElement={<Error />}>
+    <Route
+      path="/cartyzone-client/"
+      element={<RootLayout />}
+      errorElement={<Error />}
+    >
       <Route index element={<Home />} />
       <Route path="products/:id" element={<ProductDetails />} />
       <Route path="cart" element={<Cart />} />
