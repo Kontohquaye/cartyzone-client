@@ -8,7 +8,6 @@ import { MdLocalShipping } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { format, parseISO } from "date-fns";
 import { toast } from "react-toastify";
-import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 
 // api
 import backendInstance from "../utils/api";
