@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 // pages
 import SearchBox from "../components/SearchBox";
-import { useContext, useEffect, useReducer, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TbShoppingCartPlus, TbShoppingCartX } from "react-icons/tb";
 import { toast } from "react-toastify";
 import { Store } from "../services/Store";
@@ -13,6 +13,7 @@ import backendInstance from "../utils/api";
 import Rating from "../components/Rating";
 import LoadingPage from "../components/LoadingPage";
 import ErrorPage from "../pages/ErrorPage";
+import EmptyPage from "../components/EmptyPage";
 
 //
 const prices = [
@@ -52,40 +53,10 @@ const ratings = [
   },
 ];
 
-// initial
-const initialState = {
-  loading: false,
-  error: {},
-  searchData: null,
-};
-
-// reducer
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "FETCH_DATA":
-      // console.log("started");
-      return { loading: true, error: {}, searchData: null };
-    case "FETCH_COMPLETE":
-      const data = action.payload;
-      console.log(data);
-      return { loading: false, error: {}, searchData: { ...data } };
-    case "FETCH_ERROR":
-      return { loading: false, error: action.payload, searchData: null };
-
-    default:
-      return state;
-  }
-};
-
 const Search = () => {
   const navigate = useNavigate();
   const { search } = useLocation();
-  //   console.log(search);
-  // const [{ loading, error, searchData }, dispatch] = useReducer(
-  //   reducer,
-  //   initialState
-  // );
-  //
+
   const {
     state: {
       cart: { cartItems },
@@ -127,28 +98,19 @@ const Search = () => {
 
     const fetchProducts = async () => {
       // console.log(price);
-      // dispatch({ type: "FETCH_DATA" });
+
       setLoading(true);
       try {
         const { data } = await backendInstance.get(
           `/api/products/search/products/query?category=${category}&query=${query}&order=${order}&rating=${rating}&page=${page}&price=${price}`
         );
-        // dispatch({ type: "FETCH_COMPLETE", payload: data });
+
         setLoading(false);
         setSearchData(data);
-        console.log(data);
-        console.log(searchData.pages);
       } catch (err) {
-        // dispatch({ type: "FETCH_ERROR", payload: { 1: "jgjd" } });
+        toast.error("error occurred");
         console.log(err);
       }
-
-      // if (!data) {
-      //   dispatch({
-      //     type: "FETCH_ERROR",
-      //     payload: { message: "error occured" },
-      //   });
-      // }
     };
     fetchProducts();
   }, [price, category, query, order, rating, page]);
@@ -268,28 +230,29 @@ const Search = () => {
           </div>
           <div className="results mt-4">
             {/* images */}
-            {searchData && searchData.products && (
-              <div className="">
+            {searchData &&
+            searchData.products &&
+            searchData.products.length > 0 ? (
+              <div>
                 {/*order*/}
-                <div className="flex justify-end mb-2">
-                  <div>
-                    Sort by{" "}
-                    <select
-                      value={order}
-                      onChange={(e) => {
-                        navigate(
-                          `/search?category=${category}&query=${query}&rating=${rating}&price=${price}&order=${e.target.value}`
-                        );
-                      }}
-                    >
-                      <option value="featured">Featured</option>
-                      <option value="newest">Newest Arrivals</option>
-                      <option value="lowest">Price: Low to High</option>
-                      <option value="highest">Price: High to Low</option>
-                      <option value="toprated">Avg. Customer Reviews</option>
-                    </select>
-                  </div>
+                <div className="max-w-full">
+                  Sort by{" "}
+                  <select
+                    value={order}
+                    onChange={(e) => {
+                      navigate(
+                        `/search?category=${category}&query=${query}&rating=${rating}&price=${price}&order=${e.target.value}`
+                      );
+                    }}
+                  >
+                    <option value="featured">Featured</option>
+                    <option value="newest">Newest Arrivals</option>
+                    <option value="lowest">Price: Low to High</option>
+                    <option value="highest">Price: High to Low</option>
+                    <option value="toprated">Avg. Customer Reviews</option>
+                  </select>
                 </div>
+
                 <div className=" products grid gap-2">
                   {searchData.products.map((product) => (
                     <div
@@ -347,33 +310,38 @@ const Search = () => {
                   ))}
                 </div>
               </div>
+            ) : (
+              <EmptyPage />
             )}
-            {searchData && searchData.pages && (
-              <div className="btns     flex justify-center mt-3 overflow-x-auto">
-                <div className="flex mx-auto p-2 gap-1 max-w-full">
-                  {Array.from({ length: searchData.pages }, (_, index) => {
-                    return (
-                      <Link
-                        to={`/search?category=${category}&query=${query}&rating=${rating}&price=${price}&order=${order}&page=${
-                          index + 1
-                        }`}
-                      >
-                        <button
-                          className={
-                            index + 1 === Number(page)
-                              ? "font-poppins font-semibold bg-primary-200 text-white w-10 h-10 rounded-lg "
-                              : "font-poppins font-semibold bg-img w-10 h-10 rounded-lg "
-                          }
+            {searchData &&
+              searchData.products &&
+              searchData.products.length > 0 &&
+              searchData.pages && (
+                <div className="btns     flex justify-center mt-3 overflow-x-auto">
+                  <div className="flex mx-auto p-2 gap-1 max-w-full">
+                    {Array.from({ length: searchData.pages }, (_, index) => {
+                      return (
+                        <Link
+                          to={`/search?category=${category}&query=${query}&rating=${rating}&price=${price}&order=${order}&page=${
+                            index + 1
+                          }`}
                           key={index}
                         >
-                          {index + 1}
-                        </button>
-                      </Link>
-                    );
-                  })}
+                          <button
+                            className={
+                              index + 1 === Number(page)
+                                ? "font-poppins font-semibold bg-primary-200 text-white w-10 h-10 rounded-lg "
+                                : "font-poppins font-semibold bg-img w-10 h-10 rounded-lg "
+                            }
+                          >
+                            {index + 1}
+                          </button>
+                        </Link>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
           </div>
         </div>
       )}
