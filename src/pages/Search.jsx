@@ -203,7 +203,7 @@ const Search = () => {
                           : "hover:text-blue-700"
                       }
                       key={p.name}
-                      to={`/search?price=${p.value}&rating=${r.rating}&category=${category}&query=${query}&order=${order}`}
+                      to={`/search?price=${p.value}&rating=${rating}&category=${category}&query=${query}&order=${order}`}
                     >
                       {p.name}
                     </Link>
