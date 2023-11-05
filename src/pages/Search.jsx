@@ -64,7 +64,7 @@ const Search = () => {
     ctxDispatch,
   } = useContext(Store);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
   const [searchData, setSearchData] = useState({});
 
   //
@@ -108,6 +108,8 @@ const Search = () => {
         setLoading(false);
         setSearchData(data);
       } catch (err) {
+        setLoading(false);
+        setError(true);
         toast.error("error occurred");
         console.log(err);
       }
@@ -140,6 +142,7 @@ const Search = () => {
   return (
     <div className="search mt-4">
       <SearchBox />
+      {!loading && error && <ErrorPage />}
       {loading && !error && <LoadingPage />}
       {/* {error && <ErrorPage />} */}
       {!loading && !error && (

@@ -26,6 +26,7 @@ import ErrorPage from "./pages/ErrorPage";
 import SearchOrder from "./pages/SearchOrder";
 import UpdatePassword from "./pages/UpdatePassword";
 import Search from "./pages/Search";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // router
 const router = createBrowserRouter(
@@ -34,7 +35,14 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="products/:id" element={<ProductDetails />} />
       <Route path="cart" element={<Cart />} />
-      <Route path="checkout" element={<Checkout />} />
+      <Route
+        path="checkout"
+        element={
+          <ProtectedRoute>
+            <Checkout />
+          </ProtectedRoute>
+        }
+      />
       {/* account route */}
       <Route
         path="account"
@@ -44,12 +52,23 @@ const router = createBrowserRouter(
         <Route path="signin" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
         {/* profile */}
-        <Route path="profile" element={<ProfileLayout />}>
+        <Route
+          path="profile"
+          element={
+            <ProtectedRoute>
+              <ProfileLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<UpdatePassword />} />
         </Route>
         <Route
           path="orders"
-          element={<OrdersLayout />}
+          element={
+            <ProtectedRoute>
+              <OrdersLayout />
+            </ProtectedRoute>
+          }
           errorElement={<Error />}
         >
           <Route index element={<Orders />} />
@@ -57,7 +76,14 @@ const router = createBrowserRouter(
         </Route>
       </Route>
       {/* order details */}
-      <Route path="orders/order/:id" element={<OrderDetail />} />
+      <Route
+        path="orders/order/:id"
+        element={
+          <ProtectedRoute>
+            <OrderDetail />
+          </ProtectedRoute>
+        }
+      />
       <Route path="search" element={<Search />} />
       <Route path="*" exact={true} element={<ErrorPage />} />
     </Route>
