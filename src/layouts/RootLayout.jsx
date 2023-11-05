@@ -24,7 +24,7 @@ const RootLayout = () => {
     //
     const checkUser = () => {
       if (!document.cookie) {
-        if (userInfo.username) {
+        if (!userInfo.username) {
           ctxDispatch({ type: "LOGIN_EXPIRED" });
         }
       }
