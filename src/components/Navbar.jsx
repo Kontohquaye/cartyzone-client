@@ -3,8 +3,12 @@ import { TiShoppingCart } from "react-icons/ti";
 import { MdAccountCircle } from "react-icons/md";
 import { BiCategoryAlt } from "react-icons/bi";
 import { HiOutlineMenu } from "react-icons/hi";
-import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { NavLink, useNavigate, useLocation, Link } from "react-router-dom";
 import { Store } from "../services/Store";
+import { toast } from "react-toastify";
+
+// api
+import backendInstance from "../utils/api";
 
 const Navbar = () => {
   const { state, ctxDispatch } = useContext(Store);
@@ -12,19 +16,42 @@ const Navbar = () => {
   const { username } = userInfo;
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
+  const [showCategory, setShowCategory] = useState(false);
+  const [showLargeCategory, setShowLargeCategory] = useState(false);
   // large screens
   const [showAccountMenu, setShowAccountMenu] = useState(false);
   const [showMinMenu, setShowMinMenu] = useState(false);
   const location = useLocation();
   const accountRef = useRef();
+  const categoryLargeRef = useRef();
   const hamburgerRef = useRef();
   const accountSectionRef = useRef();
   const listRef = useRef();
+  const category = useRef();
+  const categorySectionRef = useRef();
+  const [categories, setCategories] = useState([]);
   // console.log(accountRef.current.target);
 
   // on locatin change (navbar)
   useEffect(() => {
     setShowMenu(false);
+
+    const fetchCategories = async () => {
+      try {
+        const { data } = await backendInstance.get(
+          "/api/products/categories/get"
+        );
+        // console.log(data);
+        if (data) {
+          setCategories(data);
+          // console.log(categories);
+        }
+      } catch (err) {
+        toast.error("couldn't fetch categories");
+        console.log(err);
+      }
+    };
+    fetchCategories();
   }, [location]);
 
   // min menu display
@@ -45,7 +72,15 @@ const Navbar = () => {
       setShowAccountMenu(false);
     }
     // small screens
-    if (hamburgerRef.current && !hamburgerRef.current.contains(e.target)) {
+    if (
+      categorySectionRef.current &&
+      categorySectionRef.current.contains(e.target)
+    ) {
+      setShowMenu(true);
+    } else if (
+      hamburgerRef.current &&
+      !hamburgerRef.current.contains(e.target)
+    ) {
       setShowMenu(false);
     }
 
@@ -61,7 +96,21 @@ const Navbar = () => {
     ) {
       setShowMenu(true);
     }
+    if (
+      categoryLargeRef.current &&
+      !categoryLargeRef.current.contains(e.target)
+    ) {
+      setShowLargeCategory(false);
+    }
   });
+
+  const handleShowCategory = (e) => {
+    // console.log("kkk");
+    if (category.current && !category.current.contains(e.target)) {
+      setShowCategory(false);
+      // console.log("left");
+    }
+  };
 
   // signOut
   const handleSignOut = () => {
@@ -74,9 +123,9 @@ const Navbar = () => {
 
   return (
     <div className="navbar bg-primary-200 text-white sticky top-0 w-full z-30">
-      <nav className="max-w-[1200px] mx-auto pt-6 pb-1 px-2 flex justify-between items-center">
+      <nav className="max-w-[1200px] mx-auto pt-6 pb-1 px-2 flex  justify-between items-center">
         {/* left- logo and category */}
-        <div>
+        <div className="basis-1/3">
           {/* logo */}
           <NavLink to="/">
             <h1 className="text-2xl italic cursor-pointer">
@@ -86,15 +135,18 @@ const Navbar = () => {
           </NavLink>
         </div>
 
+        {/* search */}
+
         {/* right */}
         {/*  */}
-        <div className="relative">
+        <div className="relative basis-1/3 flex justify-end ">
           {/* hamburg... */}
           <div ref={hamburgerRef}>
             <HiOutlineMenu
               id="hamburger"
               onClick={() => {
                 setShowMenu(!showMenu);
+                setShowCategory(false);
                 setShowMinMenu(false);
               }}
               className="text-2xl cursor-pointer hover:text-accent sm:hidden p-1 w-10 h-8"
@@ -103,11 +155,53 @@ const Navbar = () => {
 
           {/* menu */}
           {showMenu ? (
-            <div className="sm:flex sm:items-center absolute right-0 bg-primary-200 sm: sm:p-0 sm:bg-transparent sm:static">
+            <div className="sm:flex sm:items-center absolute right-0 bg-primary-200 sm:p-0 sm:bg-transparent sm:static">
               {/* category section */}
-              <div className="category-section flex items-center font-semibold sm:mr-3 cursor-pointer sm:hover:text-accent p-2 mb-1 sm:p-0 sm:mb-0 hover:bg-secondary  sm:hover:bg-transparent">
-                <BiCategoryAlt className="font-bold text-2xl mr-1" />
-                <span>Categories</span>
+              <div className="relative category-section flex items-center font-semibold sm:mr-3 cursor-pointer sm:hover:text-accent    sm:hover:bg-transparent">
+                <div
+                  ref={categorySectionRef}
+                  onMouseLeave={(e) => {
+                    handleShowCategory(e);
+                  }}
+                  onMouseOver={() => {
+                    setShowCategory(true);
+                  }}
+                  onClick={() => {
+                    setShowMinMenu(false);
+                    setShowCategory(true);
+                  }}
+                  className="flex items-center w-full h-full hover:bg-secondary p-2 mb-1 sm:p-0 sm:mb-0"
+                >
+                  <BiCategoryAlt className="font-bold text-2xl mr-1" />
+                  <span>Categories</span>
+                </div>
+                <ul
+                  ref={category}
+                  onMouseOver={() => {
+                    setShowCategory(true);
+                  }}
+                  onMouseLeave={() => {
+                    setShowCategory(false);
+                  }}
+                  className={
+                    showCategory
+                      ? "absolute w-[150px] max-w-[150px] overflow-hidden sm:hidden top-0 right-full bg-primary-200"
+                      : "hidden"
+                  }
+                >
+                  {categories.map((category) => (
+                    <Link to={`/search?category=${category}`} key={category}>
+                      <li
+                        onClick={() => {
+                          setShowMenu(false);
+                        }}
+                        className="px-2 py-2 hover:bg-secondary text-ellipsis overflow-hidden"
+                      >
+                        {category}
+                      </li>
+                    </Link>
+                  ))}
+                </ul>
               </div>
 
               {/* cart */}
@@ -221,9 +315,43 @@ const Navbar = () => {
           ) : (
             <div className="hidden sm:flex sm:items-center   ">
               {/* category section */}
-              <div className="category-section flex items-center font-semibold mr-3 cursor-pointer hover:text-accent">
-                <BiCategoryAlt className="font-bold text-2xl" />
-                <span>Categories</span>
+              <div
+                ref={categoryLargeRef}
+                className="category-section-lg flex items-center font-semibold mr-3 cursor-pointer"
+              >
+                <div
+                  className="flex items-center  hover:text-accent"
+                  onClick={() => setShowLargeCategory(!showLargeCategory)}
+                >
+                  <BiCategoryAlt className="font-bold text-2xl" />
+                  <span>Categories</span>
+                </div>
+                <ul
+                  className={
+                    showLargeCategory
+                      ? "absolute w-[150px] max-w-[150px] overflow-hidden hidden sm:block top-0 right-full bg-primary-200"
+                      : "hidden"
+                  }
+                >
+                  {categories.map((category) => (
+                    <Link
+                      onClick={() => {
+                        setShowLargeCategory(false);
+                      }}
+                      to={`/search?category=${category}`}
+                      key={category}
+                    >
+                      <li
+                        onClick={() => {
+                          setShowMenu(false);
+                        }}
+                        className="px-2 py-2 hover:bg-secondary text-ellipsis overflow-hidden"
+                      >
+                        {category}
+                      </li>
+                    </Link>
+                  ))}
+                </ul>
               </div>
 
               {/* cart */}
@@ -257,6 +385,7 @@ const Navbar = () => {
                   ref={accountRef}
                   className="flex  cursor-pointer hover:text-accent  hover:bg-transparent "
                   onClick={() => {
+                    setShowCategory(false);
                     setShowAccountMenu(!showAccountMenu);
                   }}
                 >

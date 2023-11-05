@@ -1,6 +1,6 @@
 import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
 
-const Rating = ({ rating, numReviews }) => {
+const Rating = ({ rating, numReviews, caption }) => {
   return (
     <div className="rating flex items-center font-poppins">
       <div className="stars flex text-rating">
@@ -46,8 +46,11 @@ const Rating = ({ rating, numReviews }) => {
         )}
       </div>
       <div className="num-reviews ml-1 text-accent">
-        ({numReviews > 1000 ? (numReviews / 1000).toFixed(1) + "k" : numReviews}
-        )
+        {caption
+          ? caption
+          : numReviews > 1000
+          ? (numReviews / 1000).toFixed(1) + "k"
+          : numReviews}
       </div>
     </div>
   );

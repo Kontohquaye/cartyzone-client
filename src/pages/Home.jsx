@@ -15,6 +15,7 @@ import backendInstance from "../utils/api.js";
 // helpers
 import getError from "../utils/helper.js";
 import Error from "./Error.jsx";
+import SearchBox from "../components/SearchBox.jsx";
 
 // Reducer
 const reducer = (state, action) => {
@@ -104,6 +105,7 @@ const Home = () => {
       </Helmet>
       {error && <Error />}
       {/* featured Products */}
+      <SearchBox />
       {products && products.length > 0 && (
         <h1 className="text-center sm:text-2xl font-bold">Featured Products</h1>
       )}

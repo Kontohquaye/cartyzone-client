@@ -19,7 +19,19 @@ const RootLayout = () => {
     state: { userInfo },
     ctxDispatch,
   } = useContext(Store);
+
   useEffect(() => {
+    //
+    const checkUser = () => {
+      if (!document.cookie) {
+        if (userInfo.username) {
+          ctxDispatch({ type: "LOGIN_EXPIRED" });
+        }
+      }
+    };
+    checkUser();
+
+    //
     if (document.cookie) {
       const cookies = document.cookie.split(";");
       const decodedCookies =
@@ -38,7 +50,7 @@ const RootLayout = () => {
           toast.info("log in section expired");
           ctxDispatch({ type: "LOGIN_EXPIRED" });
           localStorage.removeItem("userInfo");
-          navigate("/");
+          navigate("/account/signin");
         }
       }
     }

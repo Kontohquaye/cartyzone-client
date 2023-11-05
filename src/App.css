@@ -120,6 +120,10 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem !important;
   }
+  .search .results .products {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem !important;
+  }
 
   /* cart */
   .cart .left {
@@ -164,6 +168,10 @@
 @media screen and (min-width: 640px) {
   .featured .image {
     flex-basis: 50%;
+  }
+  .search .results .products {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem !important;
   }
 }
 @media screen and (min-width: 800px) {

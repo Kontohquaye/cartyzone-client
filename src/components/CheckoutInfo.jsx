@@ -160,6 +160,9 @@ const CheckoutInfo = ({ data }) => {
                 }}
                 className="bg-img focus:outline-slate-400 w-full py-1 px-2"
               >
+                <option value="please choose a country" className="bg-white">
+                  Please choose a country
+                </option>
                 {countries.map((country) => (
                   <option value={country} key={country} className="bg-white ">
                     {country}

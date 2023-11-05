@@ -25,6 +25,7 @@ import OrderDetail from "./pages/OrderDetail";
 import ErrorPage from "./pages/ErrorPage";
 import SearchOrder from "./pages/SearchOrder";
 import UpdatePassword from "./pages/UpdatePassword";
+import Search from "./pages/Search";
 
 // router
 const router = createBrowserRouter(
@@ -57,6 +58,7 @@ const router = createBrowserRouter(
       </Route>
       {/* order details */}
       <Route path="orders/order/:id" element={<OrderDetail />} />
+      <Route path="search" element={<Search />} />
       <Route path="*" exact={true} element={<ErrorPage />} />
     </Route>
   )

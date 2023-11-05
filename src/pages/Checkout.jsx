@@ -63,7 +63,7 @@ const Checkout = () => {
     shippingDetails ? shippingDetails.address : ""
   );
   const [country, setCountry] = useState(
-    shippingDetails ? shippingDetails.country : "Afghanistan"
+    shippingDetails ? shippingDetails.country : "please choose a country"
   );
   const [city, setCity] = useState(shippingDetails ? shippingDetails.city : "");
   const [coupon, setCoupon] = useState("");
@@ -144,67 +144,75 @@ const Checkout = () => {
     }
   };
   const handleOrder = async (e) => {
-    const orderItems = cartItems.map((item) => ({
-      ...item,
-      product: item._id,
-    }));
-    //
-    const shippingDetails = {
-      firstName,
-      lastName,
-      phone,
-      email,
-      address,
-      city,
-      postalCode,
-      country,
-    };
-    e.preventDefault();
-    // coupon
+    if (country === "please choose a country") {
+      toast.info("please select a country");
+    } else {
+      const orderItems = cartItems.map((item) => ({
+        ...item,
+        product: item._id,
+      }));
+      //
+      const shippingDetails = {
+        firstName,
+        lastName,
+        phone,
+        email,
+        address,
+        city,
+        postalCode,
+        country,
+      };
+      e.preventDefault();
+      // coupon
 
-    try {
-      dispatch({ type: "PLACE_ORDER" });
-      const date = new Date(Date.now());
-      const { data: res } = await backendInstance.post(
-        "/api/orders/order",
-        {
-          orderItems,
-          shippingDetails,
-          itemsPrice,
-          shippingPrice,
-          taxPrice,
-          totalPrice: totalPrice - discount,
-          discount,
-          date: date,
-        },
-        { headers: { authorization: `Bearer ${userInfo.token}` } }
-      );
-      // console.log(res);
-      if (res.error) {
-        dispatch({ type: "ORDER_ERROR", payload: res.error });
-      } else {
-        dispatch({ type: "ORDER_SUCCESS", payload: res });
-        ctxDispatch({
-          type: "ORDER_SUCCESS",
-          payload: res.shippingDetails,
-        });
-        localStorage.removeItem("cartItems");
-        localStorage.setItem(
-          "shippingDetails",
-          JSON.stringify(res.shippingDetails)
+      try {
+        dispatch({ type: "PLACE_ORDER" });
+        const date = new Date(Date.now());
+        const { data: res } = await backendInstance.post(
+          "/api/orders/order",
+          {
+            orderItems,
+            shippingDetails,
+            itemsPrice,
+            shippingPrice,
+            taxPrice,
+            totalPrice: totalPrice - discount,
+            discount,
+            date: date,
+          },
+          { headers: { authorization: `Bearer ${userInfo.token}` } }
         );
-        navigate("/");
+        // console.log(res);
+        if (res.error) {
+          dispatch({ type: "ORDER_ERROR", payload: res.error });
+        } else {
+          dispatch({ type: "ORDER_SUCCESS", payload: res });
+          ctxDispatch({
+            type: "ORDER_SUCCESS",
+            payload: res.shippingDetails,
+          });
+          localStorage.removeItem("cartItems");
+          localStorage.setItem(
+            "shippingDetails",
+            JSON.stringify(res.shippingDetails)
+          );
+          navigate("/");
+        }
+      } catch (err) {
+        console.log(err);
+        if (err.response.data.message) {
+          toast.error(err.response.data.message);
+        }
+        const {
+          response: {
+            data: { error },
+          },
+        } = err;
+        // console.log(error);
+
+        dispatch({ type: "ORDER_ERROR", payload: error });
+        toast.error("error occurred");
       }
-    } catch (err) {
-      // console.log(err);
-      const {
-        response: {
-          data: { error },
-        },
-      } = err;
-      // console.log(error);
-      dispatch({ type: "ORDER_ERROR", payload: error });
-      toast.error("error occurred");
     }
   };
   return (

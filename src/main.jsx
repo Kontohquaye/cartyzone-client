@@ -11,7 +11,7 @@ import App from "./App.jsx";
 import "./index.css";
 import StoreProvider from "./services/Store.jsx";
 
-if (import.meta.env.VITE_NODE_ENV === "production") disableReactDevTools();
+// if (import.meta.env.VITE_NODE_ENV === "production") disableReactDevTools();
 
 const apiKey = import.meta.env.VITE_CLIENT_ID;
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -24,6 +24,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             "enable-funding": "paylater,venmo,card",
             currency: "USD",
           }}
+          deferLoading={true}
         >
           <App />
         </PayPalScriptProvider>
