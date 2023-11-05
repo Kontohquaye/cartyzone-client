@@ -221,7 +221,7 @@ const Search = () => {
                       className={
                         rating === `${r.rating}` ? "font-bold " : "font-light "
                       }
-                      to={`/search?rating=${r.rating}category=${category}&query=${query}&price=${price}&order=${order}`}
+                      to={`/search?rating=${r.rating}&category=${category}&query=${query}&price=${price}&order=${order}`}
                       key={r.name}
                     >
                       <Rating rating={r.rating} caption={r.name} />
