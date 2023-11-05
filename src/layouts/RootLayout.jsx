@@ -65,7 +65,7 @@ const RootLayout = () => {
       <Footer />
       <ToastContainer
         position="bottom-right"
-        limit={2}
+        limit={3}
         progressClassName={"toast-bar"}
         pauseOnHover={false}
         pauseOnFocusLoss={false}
