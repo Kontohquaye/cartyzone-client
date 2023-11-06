@@ -16,6 +16,7 @@ import ErrorPage from "./ErrorPage";
 // ctx
 import { Store } from "../services/Store";
 import PayPalButton from "../components/PaypalButton";
+import PaystackButtons from "../components/PaystackButton";
 
 // reducer
 const reducer = (state, action) => {
@@ -33,17 +34,17 @@ const reducer = (state, action) => {
 };
 
 const OrderDetail = () => {
+  // console.log(import.meta.env.VITE_PCLIENT_ID);
   const navigate = useNavigate();
   const { id } = useParams();
   const {
     state: { userInfo },
   } = useContext(Store);
-  const [{ loading, error, order, loadingPay, successPay }, dispatch] =
-    useReducer(reducer, {
-      loading: false,
-      error: "",
-      order: {},
-    });
+  const [{ loading, error, order }, dispatch] = useReducer(reducer, {
+    loading: false,
+    error: "",
+    order: {},
+  });
   const printPageRef = useRef();
 
   useEffect(() => {
@@ -483,6 +484,8 @@ const OrderDetail = () => {
                 {!loading && !error && order && !order.isPaid && (
                   <div className="paypal-buttons ">
                     <PayPalButton order={order} orderId={id} />
+                    <p className="text-center font-semibold">or</p>
+                    <PaystackButtons order={order} orderId={id} />
                   </div>
                 )}
               </ul>

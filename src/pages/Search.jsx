@@ -264,7 +264,7 @@ const Search = () => {
                     >
                       {/* image section */}
                       <div className="image bg-img h-64 object-cover mb-2">
-                        <Link to={`products/${product._id}`}>
+                        <Link to={`/products/${product._id}`}>
                           <img
                             loading="lazy"
                             src={product.image}
@@ -279,7 +279,7 @@ const Search = () => {
                           rating={product.rating}
                           numReviews={product.numReviews}
                         />
-                        <Link to={`products/${product._id}`}>
+                        <Link to={`/products/${product._id}`}>
                           <p className="font-semibold hover:text-blue-500 hover:underline">
                             {product.name}
                           </p>
