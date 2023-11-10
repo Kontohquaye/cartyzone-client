@@ -54,7 +54,7 @@ const RootLayout = () => {
         }
       }
     }
-  }, [userInfo]);
+  }, [userInfo.username]);
 
   return (
     <div className="root-layout font-raleway h-[100vh]">
