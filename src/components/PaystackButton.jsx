@@ -47,7 +47,7 @@ const PaystackButtons = ({ order, orderId }) => {
   };
 
   const handlePaystackCloseAction = () => {
-    console.log("closed");
+    // console.log("closed");
     toast.info("section closed");
   };
 
