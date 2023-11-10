@@ -211,7 +211,7 @@ const Checkout = () => {
         // console.log(error);
 
         dispatch({ type: "ORDER_ERROR", payload: error });
-        toast.error("error occurred");
+        toast.error("error occurred. fields might be incomplete.");
       }
     }
   };

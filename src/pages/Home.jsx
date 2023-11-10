@@ -109,7 +109,7 @@ const Home = () => {
       {products && products.length > 0 && (
         <h1 className="text-center sm:text-2xl font-bold">Featured Products</h1>
       )}
-      {loading && <LoadingPage />}
+      {loading && products && products.length < 1 && <LoadingPage />}
       <div className="featured-products grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
         {products &&
           featuredProducts.map((product) => (
