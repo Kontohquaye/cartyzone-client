@@ -112,6 +112,7 @@ const Home = () => {
       {loading && products && products.length < 1 && <LoadingPage />}
       <div className="featured-products grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
         {products &&
+          products.length > 0 &&
           featuredProducts.map((product) => (
             // featured container
             <div

@@ -5,8 +5,6 @@ import { useContext, useEffect } from "react";
 // ctx
 import { Store } from "../services/Store";
 
-// cookie
-import Cookies from "js-cookie";
 // components
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
