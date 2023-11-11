@@ -116,7 +116,7 @@ const Checkout = () => {
         const {
           data: { value },
         } = await backendInstance.post("/api/coupons/coupon/use", {
-          name: coupon,
+          name: coupon.trim(),
         });
 
         if (value) {
