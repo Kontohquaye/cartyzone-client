@@ -109,10 +109,9 @@ const Home = () => {
       {products && products.length > 0 && (
         <h1 className="text-center sm:text-2xl font-bold">Featured Products</h1>
       )}
-      {loading && products && products.length < 1 && <LoadingPage />}
+      {loading && products.length < 1 && <LoadingPage />}
       <div className="featured-products grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-        {products &&
-          products.length > 0 &&
+        {products.length > 0 &&
           featuredProducts.length > 0 &&
           featuredProducts.map((product) => (
             // featured container
