@@ -19,12 +19,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <StoreProvider>
       <HelmetProvider>
         <PayPalScriptProvider
+          deferLoading={true}
           options={{
             "client-id": `${apiKey}`,
             "enable-funding": "paylater,venmo,card",
             currency: "USD",
           }}
-          deferLoading={true}
         >
           <App />
         </PayPalScriptProvider>
