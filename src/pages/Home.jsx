@@ -113,6 +113,7 @@ const Home = () => {
       <div className="featured-products grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
         {products &&
           products.length > 0 &&
+          featuredProducts.length > 0 &&
           featuredProducts.map((product) => (
             // featured container
             <div
@@ -174,7 +175,9 @@ const Home = () => {
           ))}
       </div>
       {/* Products */}
-      {!loading && products.length > 0 && <Products products={allProducts} />}
+      {!loading && products.length > 0 && allProducts.length > 0 && (
+        <Products products={allProducts} />
+      )}
     </div>
   );
 };
