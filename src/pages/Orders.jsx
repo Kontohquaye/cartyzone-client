@@ -1,4 +1,5 @@
 import { useContext, useEffect, useReducer } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { formatDistanceToNow, format, parseISO } from "date-fns";
 import { CiTrash } from "react-icons/ci";
@@ -12,7 +13,6 @@ import backendInstance from "../utils/api";
 
 // context
 import { Store } from "../services/Store";
-import { Link } from "react-router-dom";
 import EmptyCart from "../components/EmptyCart";
 
 // reduder
@@ -40,6 +40,7 @@ const reducer = (state, action) => {
 };
 
 const Orders = () => {
+  const navigate = useNavigate();
   const [{ loading, error, orders, deleting }, dispatch] = useReducer(reducer, {
     loading: false,
     error: "",
@@ -83,6 +84,13 @@ const Orders = () => {
         // console.log(orders);
         dispatch({ type: "FETCH_SUCCESS", payload: updatedOrders });
       } catch (err) {
+        if (err.response.data.message === "invalid user token. log in again ") {
+          console.log(err.response.data.message);
+          toast.info("log in section expired");
+          ctxDispatch({ type: "LOGIN_EXPIRED" });
+          localStorage.removeItem("userInfo");
+          navigate("/account/signin");
+        }
         const {
           response: {
             data: { error },

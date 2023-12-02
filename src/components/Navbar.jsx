@@ -56,7 +56,7 @@ const Navbar = () => {
       }
     };
     fetchCategories();
-  }, [location]);
+  }, []);
 
   // signOut
   const handleSignOut = () => {

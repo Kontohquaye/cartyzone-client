@@ -200,6 +200,13 @@ const Checkout = () => {
         }
       } catch (err) {
         console.log(err);
+        if (err.response.data.message === "invalid user token. log in again ") {
+          toast.info("log in section expired");
+          ctxDispatch({ type: "LOGIN_EXPIRED" });
+          localStorage.removeItem("userInfo");
+          navigate("/account/signin");
+        }
+
         if (err.response.data.message) {
           toast.error(err.response.data.message);
         }
