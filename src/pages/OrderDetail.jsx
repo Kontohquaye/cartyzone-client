@@ -15,7 +15,7 @@ import LoadingPage from "../components/LoadingPage";
 import ErrorPage from "./ErrorPage";
 // ctx
 import { Store } from "../services/Store";
-import PayPalButton from "../components/PaypalButton";
+// import PayPalButton from "../components/PaypalButton";
 import PaystackButtons from "../components/PaystackButton";
 
 // reducer
@@ -483,8 +483,8 @@ const OrderDetail = () => {
                 </li>
                 {!loading && !error && order && !order.isPaid && (
                   <div className="paypal-buttons ">
-                    <PayPalButton order={order} orderId={id} />
-                    <p className="text-center font-semibold">or</p>
+                    {/* <PayPalButton order={order} orderId={id} />
+                    <p className="text-center font-semibold">or</p> */}
                     <PaystackButtons order={order} orderId={id} />
                   </div>
                 )}

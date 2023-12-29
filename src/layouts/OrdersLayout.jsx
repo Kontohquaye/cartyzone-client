@@ -1,4 +1,4 @@
-import { usePayPalScriptReducer } from "@paypal/react-paypal-js";
+// import { usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { useEffect, useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -13,13 +13,13 @@ const OrdersLayout = () => {
   };
 
   //
-  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
-  useEffect(() => {
-    const loadScript = () => {
-      paypalDispatch({ type: "setLoadingStatus", value: "pending" });
-    };
-    loadScript();
-  }, [isPending]);
+  // const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+  // useEffect(() => {
+  //   const loadScript = () => {
+  //     paypalDispatch({ type: "setLoadingStatus", value: "pending" });
+  //   };
+  //   loadScript();
+  // }, [isPending]);
   return (
     <div className="orders my-4">
       <h2 className="font-semibold text-2xl text-center">Order history</h2>

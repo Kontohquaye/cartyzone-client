@@ -18,7 +18,7 @@ const Error = () => {
         <button
           className="ml-1 underline text-blue-500"
           onClick={() => {
-            navigate(-1);
+            navigate(0);
           }}
         >
           <IoMdArrowRoundBack className="inline-block " />

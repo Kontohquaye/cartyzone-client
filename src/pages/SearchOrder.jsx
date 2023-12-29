@@ -14,7 +14,8 @@ import ErrorPage from "./ErrorPage";
 
 import ReactDOMServer from "react-dom/server";
 import { Store } from "../services/Store";
-import PayPalButton from "../components/PaypalButton";
+// import PayPalButton from "../components/PaypalButton";
+import PaystackButtons from "../components/PaystackButton";
 
 // reducer
 const reducer = (state, action) => {
@@ -479,7 +480,7 @@ const SearchOrder = () => {
                 </li>
                 {!loading && !error && order && !order.isPaid && (
                   <div className="paypal-buttons ">
-                    <PayPalButton order={order} orderId={query} />
+                    <PaystackButtons order={order} orderId={query} />
                   </div>
                 )}
               </ul>

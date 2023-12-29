@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+// import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 // Load the .env file
 // import dotenv from "dotenv";
@@ -18,16 +18,16 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <StoreProvider>
       <HelmetProvider>
-        <PayPalScriptProvider
+        {/* <PayPalScriptProvider
           deferLoading={true}
           options={{
             "client-id": `${apiKey}`,
             "enable-funding": "paylater,venmo,card",
             currency: "USD",
           }}
-        >
-          <App />
-        </PayPalScriptProvider>
+        > */}
+        <App />
+        {/* </PayPalScriptProvider> */}
       </HelmetProvider>
     </StoreProvider>
   </React.StrictMode>
